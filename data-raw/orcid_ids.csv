@@ -1,7 +1,7 @@
-first_name, last_name, orcid_id
+Firstname, Lastname, orcid_id
 George,Athanasopoulos,0000-0002-5389-2802
 Catherine,Forbes,0000-0002-3456-7890
-Farshid,Vahid-Araghi,NA
+Farshid,Vahid-Araghi,0000-0002-5136-8361
 John,Stapleton,NA
 Bonsoo,Koo,0000-0002-7247-9773
 Bin,Peng,0000-0003-4231-4713
@@ -12,8 +12,8 @@ Dianne,Cook,0000-0002-3813-7155
 Xibin,Zhang,0000-0001-5813-3066
 Natalia,Bailey,000-0003-2693-5632
 Heather,Anderson,0000-0002-7668-1151
-Robert,Brooks,NA
-David,Frazier,NA
+Robert,Brooks,0000-0002-5960-8526
+David,Frazier,0000-0002-3446-2516
 Rob,Hyndman,0000-0002-2140-5352
 Brett,Inder,NA
 Athanasios,Pantelous,0000-0001-5738-1471
@@ -36,12 +36,12 @@ Ann,Maharaj,0000-0002-5513-962X
 Ralph,Snyder,0000-0001-8941-5875
 Klaus,Ackermann,0000-0001-7693-8538
 Janjala,Chirakijja,0000-0001-8106-971X
-Tissa,Galagedera,NA
-Hamza,Hanbali,NA
+Tissa,Galagedera,0000-0003-2990-4997
+Hamza,Hanbali,0000-0001-8060-4813
 Jack,Jewson,0000-0003-2703-7180
 Charanjit,Kaur,0000-0001-9379-0010
-Hsein,Kew,NA
-Ruben,Loaiza Maya,NA
+Hsein,Kew,0009-0004-6565-1274
+Ruben,Loaiza Maya,000-0003-4132-8355
 Michael,Lydeamore,0000-0001-6515-827X
 Didier,Nibbering,NA
 Geraldine,Roberts,NA
@@ -52,6 +52,6 @@ Jessica,Leung,0000-0002-3538-0790
 Akanksha,Negi,0000-0003-2531-9408
 Kate,Saunders,0000-0002-1436-7802
 Shanika,Wickramasuriya,0000-0003-2742-5992
-Joan,Tan,NA
-Daniel,Melser,NA
-Yu,Bai,NA
+Joan,Tan,0000-0001-6374-1568
+Daniel,Melser,0000-0003-0452-818X
+Yu,Bai,0000-0002-0742-0708
