@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This package is designed to efficiently retrieve the publications and research papers of Monash University professors. By utilizing ORCID IDs, scholarly IDs, or names as input, this package facilitates easy access to scholarly output, supporting academic and research activities.
+Description: This package is designed to efficiently retrieve the publications and research papers of Monash University professors. By utilizing ORCID IDs, Google Scholar IDs, or names as input, this package facilitates easy access to scholarly output, supporting academic and research activities.
 License: MIT License
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
