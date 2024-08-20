@@ -3,9 +3,8 @@
 #For each staff member: h-index, total citations, top 10 cited outputs
 #Package name, number of downloads, date of last update
 
-We can aim to have two dataframes:
-One for research outputs and one for software.
-
+library(scholar)
+library(dplyr)
 1. #display authors' GSID
 id <- "Gcz8Ng0AAAAJ"
 
@@ -62,4 +61,6 @@ get_publications("Gcz8Ng0AAAAJ",
                  flush = FALSE,
                  sortby = "citation"
 )
+
+
 
