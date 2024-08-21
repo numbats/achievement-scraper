@@ -1,14 +1,20 @@
-# function to scrape ORCID
+#' Get Publications from ORCID
+#'
+#' @param orcid_id ORCID ID
+#' @return A tibble of publications from ORCID
+#' @export
 get_publications_from_orcid <- function(orcid_id) {
-  # Will replace this with actual scraping
-  # For now, we'll return a dummy tibble with some placeholder data
-
+  # This function is a placeholder.
   orcid_pubs <- tibble::tibble(
-    title = c("ORCID Publication 1", "ORCID Publication 2"),
-    authors = c("Author X, Author Y", "Author Z, Author W"),
-    journal = c("Journal X", "Journal Y"),
-    year = c(2019, 2022),
-    source = "ORCID"
+    title = c("Sample Title 1", "Sample Title 2"),
+    DOI = c("10.1234/example1", "10.1234/example2"),
+    authors = c("Author One, Author Two", "Author Three, Author Four"),
+    publication_date = as.Date(c("2020-01-01", "2021-02-01")),
+    journal_name = c("Journal A", "Journal B"),
+    software_name = c(NA, "Software X"),
+    num_downloads = c(NA, 1000),
+    last_update_date = as.Date(c(NA, "2022-05-01")),
+    original_publish_date = as.Date(c(NA, "2021-01-01"))
   )
 
   return(orcid_pubs)

@@ -12,7 +12,7 @@ get_publications(orcid_id, scholar_id)
 \item{scholar_id}{Google Scholar ID}
 }
 \value{
-A tibble of combined and de-duplicated publications
+A list containing two dataframes: one for research outputs and one for software metadata
 }
 \description{
 Get Publications from Google Scholar and ORCID

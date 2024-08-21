@@ -1,21 +1,33 @@
+# Declare global variables to avoid NOTES
+utils::globalVariables(c("title", "DOI", "authors", "publication_date", "journal_name", "software_name", "num_downloads", "last_update_date", "original_publish_date"))
+
+
 #' Get Publications from Google Scholar and ORCID
 #'
 #' @param orcid_id ORCID ID
 #' @param scholar_id Google Scholar ID
-#' @return A tibble of combined and de-duplicated publications
+#' @return A list containing two dataframes: one for research outputs and one for software metadata
 #' @export
 get_publications <- function(orcid_id, scholar_id) {
-  # Get publications from Google Scholar
+  # publications from Google Scholar
   scholar_pubs <- get_publications_from_scholar(scholar_id)
 
-  # Get publications from ORCID
+  # publications from ORCID
   orcid_pubs <- get_publications_from_orcid(orcid_id)
 
-  # Combine the two data frames
-  all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs)
+  # Combine and deduplicate
+  all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) %>%
+    dplyr::distinct()
 
-  # De-duplicate the combined data
-  unique_pubs <- dplyr::distinct(all_pubs)
+  # Split into research and software frames
+  research_df <- all_pubs %>%
+    dplyr::filter(!is.na(journal_name)) %>%
+    dplyr::select(title, DOI, authors, publication_date, journal_name)
 
-  return(unique_pubs)
+  software_df <- all_pubs %>%
+    dplyr::filter(!is.na(software_name)) %>%
+    dplyr::select(software_name, authors, num_downloads, last_update_date, original_publish_date)
+
+  # Return the dataframes as a list
+  return(list(research = research_df, software = software_df))
 }

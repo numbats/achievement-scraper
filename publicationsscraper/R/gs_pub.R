@@ -1,15 +1,33 @@
-# function to scrape Google Scholar
+#' Get Publications from Google Scholar
+#'
+#' @param scholar_id Google Scholar ID
+#' @return A tibble of publications from Google Scholar
+#' @export
 get_publications_from_scholar <- function(scholar_id) {
-  # will replace this with actual scraping
-  # For now, we'll return a dummy tibble with some placeholder data
+  publications <- scholar::get_publications(scholar_id)
 
-  scholar_pubs <- tibble::tibble(
-    title = c("Scholar Publication 1", "Scholar Publication 2"),
-    authors = c("Author A, Author B", "Author C, Author D"),
-    journal = c("Journal A", "Journal B"),
-    year = c(2020, 2021),
-    source = "Google Scholar"
-  )
+  # Check if the column exists, if not, create a placeholder
+  if (!"doi" %in% colnames(publications)) {
+    publications$doi <- NA
+  }
 
-  return(scholar_pubs)
+  # Ensure other columns exist
+  if (!"journal" %in% colnames(publications)) {
+    publications$journal <- NA
+  }
+  if (!"pub_date" %in% colnames(publications)) {
+    publications$pub_date <- NA
+  }
+
+  # required research frame structure
+  scholar_df <- publications %>%
+    dplyr::select(
+      title = title,
+      DOI = doi,
+      authors = author,
+      publication_date = pub_date,
+      journal_name = journal
+    )
+
+  return(scholar_df)
 }

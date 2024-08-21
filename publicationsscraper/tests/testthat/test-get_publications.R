@@ -1,10 +1,11 @@
-library(testthat)
-library(publicationsscraper)
-
 test_that("get_publications works correctly", {
-  result <- get_publications("dummy_orcid_id", "dummy_scholar_id")
+  scholar_id <- "Gcz8Ng0AAAAJ"
+  orcid_id <- "0000-0001-2345-6789"
 
-  expect_true(tibble::is_tibble(result))
-  expect_named(result, c("title", "authors", "journal", "year", "source"))
-  expect_true(nrow(result) > 0)
+  results <- get_publications(orcid_id, scholar_id)
+
+  expect_type(results, "list")
+  expect_named(results, c("research", "software"))
+  expect_true(nrow(results$research) > 0)
+  expect_true(nrow(results$software) > 0)
 })
