@@ -10,3 +10,6 @@ Encoding: UTF-8
 Imports: scholar, dplyr, tibble
 Suggests: 
   testthat
+Depends: 
+    R (>= 2.10)
+LazyData: true
