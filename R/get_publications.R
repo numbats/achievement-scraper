@@ -16,16 +16,16 @@ get_publications <- function(orcid_id, scholar_id) {
   orcid_pubs <- get_publications_from_orcid(orcid_id)
 
   # Combine and deduplicate
-  all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) %>%
+  all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) |>
     dplyr::distinct()
 
   # Split into research and software frames
-  research_df <- all_pubs %>%
-    dplyr::filter(!is.na(journal_name)) %>%
+  research_df <- all_pubs |>
+    dplyr::filter(!is.na(journal_name)) |>
     dplyr::select(title, DOI, authors, publication_date, journal_name)
 
-  software_df <- all_pubs %>%
-    dplyr::filter(!is.na(software_name)) %>%
+  software_df <- all_pubs |>
+    dplyr::filter(!is.na(software_name)) |>
     dplyr::select(software_name, authors, num_downloads, last_update_date, original_publish_date)
 
   # Return the dataframes as a list
