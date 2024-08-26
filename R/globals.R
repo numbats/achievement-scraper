@@ -1,0 +1,16 @@
+utils::globalVariables(
+  c(
+    "title",
+    "DOI",
+    "doi",
+    "authors",
+    "pub_date",
+    "publication_date",
+    "journal",
+    "journal_name",
+    "software_name",
+    "num_downloads",
+    "last_update_date",
+    "original_publish_date"
+    )
+  )
