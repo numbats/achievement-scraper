@@ -29,12 +29,9 @@ get_publications <- function(orcid_id, scholar_id) {
     dplyr::filter(!is.na(journal_name)) |>
     dplyr::select(title, DOI, authors, publication_date, journal_name)
 
-<<<<<<< Updated upstream:R/get_publications.R
   software_df <- all_pubs |>
     dplyr::filter(!is.na(software_name)) |>
     dplyr::select(software_name, authors, num_downloads, last_update_date, original_publish_date)
-=======
->>>>>>> Stashed changes:R/combine.R
 
   # Return the dataframes as a list
   return(list(research = research_df))
