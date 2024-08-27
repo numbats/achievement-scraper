@@ -34,5 +34,5 @@ get_publications <- function(orcid_id, scholar_id) {
     dplyr::select(software_name, authors, num_downloads, last_update_date, original_publish_date)
 
   # Return the dataframes as a list
-  return(list(research = research_df))
+  return(research_df)
 }
