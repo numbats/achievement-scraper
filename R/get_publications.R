@@ -1,7 +1,3 @@
-# Declare global variables to avoid NOTES
-utils::globalVariables(c("title", "DOI", "authors", "publication_date", "journal_name", "software_name", "num_downloads", "last_update_date", "original_publish_date"))
-
-
 #' Get Publications from Google Scholar and ORCID
 #'
 #' @param orcid_id ORCID ID
