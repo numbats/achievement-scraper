@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Your Name
 Maintainer: Your Name <your.email@example.com>
 Description: A package to scrape and combine publication data from Google Scholar and ORCID.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Imports: scholar, dplyr, tibble, rorcid,  magrittr
 Suggests: 
