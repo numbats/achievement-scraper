@@ -16,37 +16,28 @@
 
 
 
-library(tidyverse)
-library(kableExtra)
-library(tsibble)
-library(lubridate)
-library(pkgmeta)
-library(pkgsearch)
-library(cranlogs)
-
-find_cran_packages <- function() {
-  # Load the ORCID names
-  orcid_gsid <- read_csv("data-raw/orcid_gsid.csv")
+find_cran_packages <- function(first_name, last_name) {
 
   # Assuming there are columns 'first_name' and 'last_name' in the CSV
-  names_to_search <- paste(orcid_gsid$first_name, orcid_gsid$last_name)
-
-  # Prepare a vector to store all found packages
-  all_packages <- c()
+  author_name <- paste(first_name, last_name)
 
   # Loop through names and find packages
-  for (name in names_to_search) {
-    results <- pkgsearch::ps(name, size = 100)
-    author_packages <- results$data %>%
-      filter(grepl(name, Author, fixed = TRUE)) %>%
-      pull(package)
+    results <- pkgsearch::ps(author_name, size = 200)
 
-    # Combine the results into the main vector
-    all_packages <- c(all_packages, author_packages)
-  }
+    num_packages <- length(results$package)
+    
+    package_frame <- lapply(1:num_packages, function(i) {
+
+      tibble(
+        name = results$package[i],
+        downloads = results$package_data[[i]]$downloads,
+        authors = results$package_data[[i]]$Author,
+        last_update_date = results$package_data[[i]]$date
+      )
+    }) |> 
+      dplyr::bind_rows() |>
+      dplyr::filter(stringr::str_detect(authors, author_name))
 
   # Return unique packages only
-  unique(all_packages)
+  unique(package_frame)
 }
-
-
