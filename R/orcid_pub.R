@@ -15,12 +15,12 @@
 #'
 #' @examples
 #' # Retrieve publications for specific ORCID IDs
-#' get_publications_from_orcid(c("0000-000X-XXXX-XXXX", "0000-000X-XXXX-XXXX"))
-#'
+#' \dontrun{get_publications_from_orcid(c("0000-0003-2531-9408", "000-0001-5738-1471"))}
 #' @name get_publications_from_orcid
 #' @export
 
 get_publications_from_orcid <- function(orcid_ids) {
+  orcid_ids <- as.vector(orcid_ids)
   all_pubs <- list()
 
   for (orcid_id in orcid_ids) {
@@ -28,17 +28,18 @@ get_publications_from_orcid <- function(orcid_ids) {
     if (!is.null(pubs[[1]]$works)) {
       all_pubs[[orcid_id]] <- pubs[[1]]$works %>%
         dplyr::select(
-          title = .data[[ "work-title" ]][[ "title" ]][[ "value" ]],
-          DOI = .data[[ "work-external-identifiers" ]][[ "work-external-identifier" ]][[1]][[ "work-external-identifier-id" ]][[ "value" ]],
-          authors = .data[[ "work-contributors" ]][[ "contributor" ]][[1]][[ "credit-name" ]][[ "value" ]],
-          publication_date = .data[[ "publication-date" ]][[ "year" ]][[ "value" ]],
-          journal_name = .data[[ "journal-title" ]][[ "value" ]]
+          title = `title.title.value`,
+          DOI = `external-ids.external-id`,
+          authors = `source.assertion-origin-name.value`,
+          publication_date = `publication-date.year.value`,
+          journal_name = `journal-title.value`
         )
-    } else {
-      all_pubs[[orcid_id]] <- tibble::tibble()
     }
   }
 
-  return(dplyr::bind_rows(all_pubs, .id = "orcid_id"))
+  return(dplyr::bind_rows(all_pubs))
 }
+
+
+
 
