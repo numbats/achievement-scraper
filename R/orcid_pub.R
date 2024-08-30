@@ -33,6 +33,19 @@ get_publications_from_orcid <- function(orcid_ids) {
           authors = `source.assertion-origin-name.value`,
           publication_date = `publication-date.year.value`,
           journal_name = `journal-title.value`
+        ) |>
+        mutate(
+          # the `external-ids` contains lots of things, not just DOI. It is a list containing a dataframe
+          # Mapping over that list, we can filter out just the 'doi' type
+          # Then pull it into a character vector
+          # Overwrite DOI with this value
+          DOI = purrr::map(
+            .x = DOI,
+            .f = function(x) {
+              dplyr::filter(x, `external-id-type` == "doi") |>
+                dplyr::pull(`external-id-value`)
+            }
+          )
         )
     }
   }
