@@ -2,6 +2,8 @@
 #'
 #' @param orcid_id ORCID ID
 #' @param scholar_id Google Scholar ID
+#' @param first_name Author's First Name
+#' @param last_name Author's Last Name
 #' @return A list containing two dataframes: one for research outputs and one for software metadata
 #' @export
 #'
@@ -19,6 +21,9 @@ get_publications <- function(orcid_id, scholar_id) {
   } else {
     orcid_pubs <- get_publications_from_orcid(orcid_id)
   }
+
+  # CRAN packages data
+  cran_pubs <- find_cran_packages(first_name, last_name)
 
   # Combine and deduplicate
   all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) |>
