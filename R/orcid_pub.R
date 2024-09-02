@@ -9,7 +9,7 @@
 #' @return A data frame containing all publications for the specified ORCID IDs.
 #'
 #' @importFrom rorcid orcid_works
-#' @importFrom dplyr select bind_rows
+#' @importFrom dplyr select bind_rows mutate
 #' @importFrom tibble tibble
 #' @importFrom magrittr %>%
 #'

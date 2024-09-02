@@ -25,7 +25,7 @@ get_publications_from_scholar <- function(scholar_id) {
       title = title,
       DOI = doi,
       authors = author,
-      publication_date = pub_date,
+      publication_year = pub_date,
       journal_name = journal
     )
 
