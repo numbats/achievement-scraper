@@ -52,3 +52,21 @@ combine_publications_for_multiple <- function(ids) {
 
   return(combined_df)
 }
+
+
+# 3. Function to combine CRAN downloads for multiple people
+#'
+#' @param people A list of first and last names for multiple people
+#' @return A combined dataframe of CRAN package downloads for all people
+#' @export
+combine_cran_for_multiple <- function(people) {
+  combined_df <- purrr::map_dfr(people, function(person) {
+    find_cran_packages(person$first_name, person$last_name)
+  })
+
+  # Deduplicate combined results
+  combined_df <- combined_df |>
+    dplyr::distinct()
+
+  return(combined_df)
+}
