@@ -7,7 +7,14 @@
 #' @param orcid_id ORCID ID
 #' @param scholar_id Google Scholar ID
 #'
-#' @return A dataframe containing research outputs: title, DOI, authors, publication_date, and journal_name
+#' #' @return A dataframe containing research outputs with the following columns:
+#' \itemize{
+#'   \item{title}{Title of the research paper}
+#'   \item{DOI}{Digital Object Identifier (DOI) of the research paper}
+#'   \item{authors}{Authors of the research paper}
+#'   \item{publication_date}{Publication date of the research paper}
+#'   \item{journal_name}{Journal where the research paper was published}
+#' }
 #'
 #' @examples
 #' # Example 1: Retrieve publications from both ORCID and Google Scholar
@@ -41,6 +48,16 @@ get_publications <- function(orcid_id, scholar_id) {
   all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) |>
     dplyr::distinct()
 
+  # Ensure necessary columns exist
+  required_cols <- c("title", "DOI", "authors", "publication_date", "journal_name")
+  missing_cols <- setdiff(required_cols, colnames(all_pubs))
+
+  if (length(missing_cols) > 0) {
+    for (col in missing_cols) {
+      all_pubs[[col]] <- NA
+    }
+  }
+
   # Split into research frame
   research_df <- all_pubs |>
     dplyr::filter(!is.na(journal_name)) |>
@@ -49,6 +66,10 @@ get_publications <- function(orcid_id, scholar_id) {
   # Return the research dataframe
   return(research_df)
 }
+
+
+
+
 
 
 # 2. Function to combine outputs from `get_publications` for multiple people
@@ -67,6 +88,11 @@ combine_publications_for_multiple <- function(ids) {
 
   return(combined_df)
 }
+
+
+
+
+
 
 # 3. Function to combine CRAN downloads for multiple people
 #'
