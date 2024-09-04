@@ -15,8 +15,11 @@ Imports:
     magrittr,
     pkgsearch
 Suggests: 
-  testthat
+    knitr,
+    rmarkdown,
+    testthat
 Depends: 
     R (>= 2.10)
 LazyData: true
 RoxygenNote: 7.3.2
+VignetteBuilder: knitr

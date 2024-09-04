@@ -1,0 +1,50 @@
+---
+title: "visualisations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{visualisations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(publicationsscraper)
+```
+
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+
+# Example: Replace these IDs with actual ORCID and Scholar IDs
+publications <- get_publications("0000-0003-2531-9408", "Gcz8Ng0AAAAJ")
+
+
+# Visualization 1: Top 10 Most Frequent Journals
+
+# Summarize the number of publications per journal
+journal_frequencies <- publications %>%
+  group_by(journal_name) %>%
+  summarise(publication_count = n()) %>%
+  arrange(desc(publication_count)) %>%
+  head(5)  # Select the top 10 journals
+
+# Create the bar chart for the top 10 most frequent journals
+ggplot(journal_frequencies, aes(x = reorder(journal_name, publication_count), y = publication_count)) +
+  geom_bar(stat = "identity", fill = "coral") +
+  labs(title = "Top 10 Most Frequent Journals",
+       x = "Journal Name",
+       y = "Number of Publications") +
+  coord_flip() +  # Flip the axes for better readability
+  theme_minimal()
+```
+

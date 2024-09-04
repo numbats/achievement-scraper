@@ -3,3 +3,4 @@
 .Renviron
 .Rproj.user
 source_orcid.R
+inst/doc
