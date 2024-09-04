@@ -34,3 +34,21 @@ get_publications <- function(orcid_id, scholar_id) {
   # Return the dataframes as a list
   return(research_df)
 }
+
+
+# 2. Function to combine outputs from `get_publications` for multiple people
+#'
+#' @param ids A list of ORCID and Scholar IDs for multiple people
+#' @return A combined dataframe of research outputs for all people
+#' @export
+combine_publications_for_multiple <- function(ids) {
+  combined_df <- purrr::map_dfr(ids, function(id) {
+    get_publications(id$orcid_id, id$scholar_id)
+  })
+
+  # Deduplicate combined results
+  combined_df <- combined_df |>
+    dplyr::distinct()
+
+  return(combined_df)
+}
