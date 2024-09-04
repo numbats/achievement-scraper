@@ -2,19 +2,11 @@
 #'
 #' @description
 #' This function retrieves research publications from Google Scholar and ORCID based on the provided IDs.
-#' It fetches publications from each platform and combines them into a unified dataset. .
-#'
+
 #' @param orcid_id ORCID ID
 #' @param scholar_id Google Scholar ID
 #'
-#' #' @return A dataframe containing research outputs with the following columns:
-#' \itemize{
-#'   \item{title}{Title of the research paper}
-#'   \item{DOI}{Digital Object Identifier (DOI) of the research paper}
-#'   \item{authors}{Authors of the research paper}
-#'   \item{publication_date}{Publication date of the research paper}
-#'   \item{journal_name}{Journal where the research paper was published}
-#' }
+#' #' @return A dataframe containing research outputs containing title, DOI, authors, publications, journal name.
 #'
 #' @examples
 #' # Example 1: Retrieve publications from both ORCID and Google Scholar
@@ -30,26 +22,22 @@
 #'
 #' @export
 get_publications <- function(orcid_id, scholar_id) {
-  # publications from Google Scholar
   if (is.na(scholar_id)) {
     scholar_pubs <- NULL
   } else {
     scholar_pubs <- get_publications_from_scholar(scholar_id)
   }
 
-  # publications from ORCID
   if (is.na(orcid_id)) {
     orcid_pubs <- NULL
   } else {
     orcid_pubs <- get_publications_from_orcid(orcid_id)
   }
 
-  # Combine and deduplicate
   all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) |>
     dplyr::distinct()
 
-  # Ensure necessary columns exist
-  required_cols <- c("title", "DOI", "authors", "publication_date", "journal_name")
+  required_cols <- c("title", "DOI", "authors", "publication_year", "journal_name")
   missing_cols <- setdiff(required_cols, colnames(all_pubs))
 
   if (length(missing_cols) > 0) {
@@ -58,12 +46,10 @@ get_publications <- function(orcid_id, scholar_id) {
     }
   }
 
-  # Split into research frame
   research_df <- all_pubs |>
     dplyr::filter(!is.na(journal_name)) |>
     dplyr::select(title, DOI, authors, publication_date, journal_name)
 
-  # Return the research dataframe
   return(research_df)
 }
 
@@ -72,23 +58,46 @@ get_publications <- function(orcid_id, scholar_id) {
 
 
 
-# 2. Function to combine outputs from `get_publications` for multiple people
+#' 2. get_all_publications
 #'
-#' @param ids A list of ORCID and Scholar IDs for multiple people
-#' @return A combined dataframe of research outputs for all people
+#' @description
+#' This function retrieves research publications of all the authors from
+#' Google Scholar and ORCID based on the provided IDs.
+
+#' @param orcid_id list of ORCID ID
+#' @param scholar_id list of Google Scholar ID
+#' @return A combined dataframe of research outputs for all authors publications.
+#' @examples
+#' \dontrun{orcid_ids <- c("0000-0003-2531-9408", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
+#' \dontrun{scholar_ids <- c(NA, "Gcz8Ng0AAAAJ", "4bahYMkAAAAJ", NA)}
+#' \dontrun{get_all_publications(orcid_ids, scholar_ids)}
+#'
+#' @name get_all_publications
+#'
 #' @export
-combine_publications_for_multiple <- function(ids) {
-  combined_df <- purrr::map_dfr(ids, function(id) {
-    get_publications(id$orcid_id, id$scholar_id)
-  })
+get_all_publications <- function(orcid_ids, scholar_ids) {
+  combined_pubs <- list()
 
-  # Deduplicate combined results
-  combined_df <- combined_df |>
-    dplyr::distinct()
+  for (i in seq_along(orcid_ids)) {
+    orcid_id <- orcid_ids[i]
+    scholar_id <- scholar_ids[i]
 
-  return(combined_df)
+    multiple_pubs <- get_publications(orcid_id, scholar_id) |>
+      dplyr::mutate(
+        DOI = purrr::map(
+          .x = DOI,
+          .f = function(x) {
+            dplyr::filter(x, `external-id-type` == "doi") |>
+              dplyr::pull(`external-id-value`)
+          }
+        )
+      )
+
+    combined_pubs[[i]] <- multiple_pubs
+  }
+
+  return(dplyr::bind_rows(combined_pubs))
 }
-
 
 
 
