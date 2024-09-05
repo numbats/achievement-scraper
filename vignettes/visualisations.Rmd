@@ -15,9 +15,7 @@ library(ggplot2)
 
 ```{r}
 # Publications of each author by year
-pubs <- get_publications("0000-0002-2140-5352", "vamErfkAAAAJ")
-
-pubs %>%
+get_publications("0000-0002-2140-5352", "vamErfkAAAAJ") %>%
   dplyr::filter(!is.na(publication_date)) %>%
   dplyr::count(publication_date) %>%
   ggplot(aes(x = as.numeric(publication_date), y = n)) +  
@@ -26,5 +24,29 @@ pubs %>%
   labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
 ```
 
+```{r}
+# Top Packages by Number of Downloads
+cran_all_pubs(authors_list) %>%
+  dplyr::arrange(desc(downloads)) %>%
+  dplyr::top_n(10, downloads) %>%
+  ggplot(aes(x = reorder(name, downloads), y = downloads)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Top 10 Packages by Downloads", x = "Package Name", y = "Downloads")
+```
 
+```{r}
+# Total Downloads by Author
+cran_all_pubs(authors_list) %>%
+  dplyr::mutate(authors = stringr::str_extract(authors, "[^\\[]+")) %>%
+  dplyr::group_by(authors) %>%
+  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) %>%
+  dplyr::arrange(desc(total_downloads)) %>%
+  ggplot(aes(x = reorder(authors, total_downloads), y = total_downloads)) +
+  geom_bar(stat = "identity", fill = "hotpink") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Total Downloads by Author", x = "Author", y = "Total Downloads")
+
+```
 
