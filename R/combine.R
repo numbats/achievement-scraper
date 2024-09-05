@@ -10,13 +10,13 @@
 #'
 #' @examples
 #' # Example 1: Retrieve publications from both ORCID and Google Scholar
-#' \dontrun{get_publications("0000-0003-2531-9408", "Gcz8Ng0AAAAJ")}
+#' \dontrun{get_publications("0000-0002-2140-5352", "vamErfkAAAAJ")}
 #'
 #  # Example 2: Retrieve publications only from Google Scholar
-#' \dontrun{get_publications(NA, "Gcz8Ng0AAAAJ")}
+#' \dontrun{get_publications(NA, "vamErfkAAAAJ")}
 #'
 #' # Example 3: Retrieve publications only from ORCID
-#' \dontrun{get_publications("0000-0003-2531-9408", NA)}
+#' \dontrun{get_publications("0000-0002-2140-5352", NA)}
 #'
 #' @name get_publications
 #'
@@ -57,7 +57,6 @@ get_publications <- function(orcid_id, scholar_id) {
 
 
 
-
 #' 2. get_all_publications
 #'
 #' @description
@@ -68,8 +67,8 @@ get_publications <- function(orcid_id, scholar_id) {
 #' @param scholar_id list of Google Scholar ID
 #' @return A combined dataframe of research outputs for all authors publications.
 #' @examples
-#' \dontrun{orcid_ids <- c("0000-0003-2531-9408", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
-#' \dontrun{scholar_ids <- c(NA, "Gcz8Ng0AAAAJ", "4bahYMkAAAAJ", NA)}
+#' \dontrun{orcid_ids <- c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
+#' \dontrun{scholar_ids <- c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)}
 #' \dontrun{get_all_publications(orcid_ids, scholar_ids)}
 #'
 #' @name get_all_publications
@@ -103,19 +102,31 @@ get_all_publications <- function(orcid_ids, scholar_ids) {
 
 
 
-# 3. Function to combine CRAN downloads for multiple people
+#' 3. cran_all_pubs
 #'
-#' @param people A list of first and last names for multiple people
-#' @return A combined dataframe of CRAN package downloads for all people
+#' @description
+#' This function combines the cran publications for all authors.
+#'
+#' @param author A list of names of different authors.
+#' @return A combined dataframe of CRAN package downloads for all authors.
+#' @examples
+#' \dontrun{
+  #' authors_list <- list(
+  #'   list(first_name = "Michael", last_name = "Lydeamore"),
+  #'   list(first_name = "Rob", last_name = "Hyndman")
+  #' )
+  #' }
+  #' \dontrun{cran_all_pubs(authors_list)}
+  #' @name cran_all_pubs
 #' @export
-combine_cran_for_multiple <- function(people) {
-  combined_df <- purrr::map_dfr(people, function(person) {
+cran_all_pubs <- function(authors) {
+  combined_df <- purrr::map_dfr(authors, function(person) {
     find_cran_packages(person$first_name, person$last_name)
   })
 
-  # Deduplicate combined results
   combined_df <- combined_df |>
     dplyr::distinct()
 
   return(combined_df)
 }
+

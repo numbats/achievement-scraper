@@ -2,22 +2,27 @@
 % Please edit documentation in R/combine.R
 \name{get_publications}
 \alias{get_publications}
-\title{Get Publications from Google Scholar and ORCID}
+\title{1. get_publications}
 \usage{
 get_publications(orcid_id, scholar_id)
 }
 \arguments{
 \item{orcid_id}{ORCID ID}
 
-\item{scholar_id}{Google Scholar ID}
+\item{scholar_id}{Google Scholar ID
 
-\item{first_name}{Author's First Name}
-
-\item{last_name}{Author's Last Name}
-}
-\value{
-A list containing two dataframes: one for research outputs and one for software metadata
+#' @return A dataframe containing research outputs containing title, DOI, authors, publications, journal name.}
 }
 \description{
-Get Publications from Google Scholar and ORCID
+This function retrieves research publications from Google Scholar and ORCID based on the provided IDs.
+}
+\examples{
+# Example 1: Retrieve publications from both ORCID and Google Scholar
+\dontrun{get_publications("0000-0002-2140-5352", "vamErfkAAAAJ")}
+
+\dontrun{get_publications(NA, "vamErfkAAAAJ")}
+
+# Example 3: Retrieve publications only from ORCID
+\dontrun{get_publications("0000-0002-2140-5352", NA)}
+
 }
