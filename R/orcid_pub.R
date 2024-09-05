@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' # Retrieve publications for specific ORCID IDs
-#' \dontrun{get_publications_from_orcid(c("0000-0003-2531-9408", "000-0001-5738-1471"))}
+#' \dontrun{get_publications_from_orcid(c("0000-0003-2531-9408", "0000-0001-5738-1471"))}
 #' @name get_publications_from_orcid
 #' @export
 
@@ -39,13 +39,21 @@ get_publications_from_orcid <- function(orcid_ids) {
           # Mapping over that list, we can filter out just the 'doi' type
           # Then pull it into a character vector
           # Overwrite DOI with this value
-          DOI = purrr::map(
+          DOI = purrr::map_chr(
             .x = DOI,
             .f = function(x) {
-              dplyr::filter(x, `external-id-type` == "doi") |>
+              if(length(x) == 0L)
+                return(NA)
+              doi <- dplyr::filter(x, `external-id-type` == "doi") |>
                 dplyr::pull(`external-id-value`)
+
+              if (length(doi) == 0L) {
+                return (NA)
+              } else {
+                return (doi[1])
+              }
             }
-          )
+          ), orcid_id = orcid_id
         )
     }
   }

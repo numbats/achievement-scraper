@@ -48,9 +48,9 @@ get_publications <- function(orcid_id, scholar_id) {
 
   research_df <- all_pubs |>
     dplyr::filter(!is.na(journal_name)) |>
-    dplyr::select(title, DOI, authors, publication_date, journal_name)
+    dplyr::select(title, DOI, authors, publication_year, journal_name)
 
-  return(research_df)
+  return(tibble::as_tibble(research_df))
 }
 
 
@@ -69,7 +69,8 @@ get_publications <- function(orcid_id, scholar_id) {
 #' @examples
 #' \dontrun{orcid_ids <- c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
 #' \dontrun{scholar_ids <- c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)}
-#' \dontrun{get_all_publications(orcid_ids, scholar_ids)}
+#' \dontrun{
+#' }
 #'
 #' @name get_all_publications
 #'
@@ -81,21 +82,13 @@ get_all_publications <- function(orcid_ids, scholar_ids) {
     orcid_id <- orcid_ids[i]
     scholar_id <- scholar_ids[i]
 
-    multiple_pubs <- get_publications(orcid_id, scholar_id) |>
-      dplyr::mutate(
-        DOI = purrr::map(
-          .x = DOI,
-          .f = function(x) {
-            dplyr::filter(x, `external-id-type` == "doi") |>
-              dplyr::pull(`external-id-value`)
-          }
-        )
-      )
+    multiple_pubs <- get_publications(orcid_id, scholar_id)
+
 
     combined_pubs[[i]] <- multiple_pubs
   }
 
-  return(dplyr::bind_rows(combined_pubs))
+  return(tibble::as_tibble(dplyr::bind_rows(combined_pubs)))
 }
 
 
@@ -127,6 +120,6 @@ cran_all_pubs <- function(authors) {
   combined_df <- combined_df |>
     dplyr::distinct()
 
-  return(combined_df)
+  return(tibble::as_tibble(combined_df))
 }
 

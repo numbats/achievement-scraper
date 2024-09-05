@@ -31,3 +31,4 @@ get_publications_from_scholar <- function(scholar_id) {
 
   return(scholar_df)
 }
+
