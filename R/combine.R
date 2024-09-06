@@ -69,7 +69,8 @@ get_publications <- function(orcid_id, scholar_id) {
 #' @examples
 #' \dontrun{orcid_ids <- c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
 #' \dontrun{scholar_ids <- c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)}
-#' \dontrun{
+#' \dontrun{all_publications <- get_all_publications(orcid_ids, scholar_ids)
+#' print(all_publications)
 #' }
 #'
 #' @name get_all_publications
