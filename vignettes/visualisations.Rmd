@@ -51,4 +51,19 @@ cran_all_pubs(authors_list) %>%
 ```
 
 
+```{r}
+# Top 10 Authors by Number of Publications
+get_all_publications(orcid_ids, scholar_ids) %>%
+  tidyr::separate_rows(authors, sep = ", ") %>%
+  dplyr::count(authors, sort = TRUE) %>%
+  dplyr::top_n(10, n) %>%
+  ggplot(aes(x = reorder(authors, n), y = n)) +
+  geom_bar(stat = "identity", fill = "purple") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Top 10 Authors by Number of Publications", x = "Author", y = "Number of Publications")
+```
+
+
+
 
