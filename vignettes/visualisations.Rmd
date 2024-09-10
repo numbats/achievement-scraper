@@ -65,5 +65,20 @@ get_all_publications(orcid_ids, scholar_ids) %>%
 ```
 
 
+```{r}
+library(ggplot2)
+library(lubridate)
+cran_all_pubs(authors_list) %>%
+  dplyr::mutate(last_update_date = lubridate::ymd_hms(last_update_date)) %>%
+  dplyr::arrange(last_update_date) %>%
+  ggplot(aes(x = last_update_date, y = downloads, group = 1)) + 
+  geom_line(color = "blue", size = 1) +
+  theme_minimal() +
+  labs(title = "Downloads Over Time", x = "Last Update Date", y = "Downloads")
+
+```
+
+
+
 
 
