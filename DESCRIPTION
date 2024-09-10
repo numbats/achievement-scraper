@@ -2,8 +2,9 @@ Package: publicationsscraper
 Type: Package
 Title: Publication Scraper
 Version: 0.1.0
-Author: Your Name
-Maintainer: Your Name <your.email@example.com>
+Authors@R: 
+    person("Parnika", "Khattri", , "pkha0009@student.monash.edu", role = c("aut", "cre")),
+    person("Sherry", "Tee", , "stee0009@student.monash.edu", role = c("aut", "cre"))
 Description: A package to scrape and combine publication data from Google Scholar and ORCID.
 License: MIT + file LICENSE
 Encoding: UTF-8
