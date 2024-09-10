@@ -1,7 +1,19 @@
 #' Get Publications from Google Scholar
 #'
-#' @param scholar_id Google Scholar ID
-#' @return A tibble of publications from Google Scholar
+#' @description
+#' This function retrieves publications for a given Google Scholar ID and formats them into a structured data frame.
+#'
+#' @param scholar_id A character string representing the Google Scholar ID.
+#'
+#' @return A data frame containing all publications for the specified Google Scholar ID.
+#'
+#' @importFrom scholar get_publications
+#' @importFrom dplyr select
+#'
+#' @examples
+#' \dontrun{get_publications_from_scholar("vamErfkAAAAJ")}
+#'
+#' @name get_publications_from_scholar
 #' @export
 get_publications_from_scholar <- function(scholar_id) {
   publications <- scholar::get_publications(scholar_id)

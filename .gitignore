@@ -5,3 +5,4 @@
 source_orcid.R
 inst/doc
 .Rhistory
+.httr-oauth

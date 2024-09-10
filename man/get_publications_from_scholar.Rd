@@ -7,11 +7,16 @@
 get_publications_from_scholar(scholar_id)
 }
 \arguments{
-\item{scholar_id}{Google Scholar ID}
+\item{scholar_id}{A character string representing the Google Scholar ID.}
 }
 \value{
-A tibble of publications from Google Scholar
+A data frame containing all publications for the specified Google Scholar ID.
 }
 \description{
-Get Publications from Google Scholar
+This function retrieves publications for a given Google Scholar ID and formats them into a structured data frame.
+}
+\examples{
+# Example usage:
+get_publications_from_scholar("scholar_id_example")
+
 }
