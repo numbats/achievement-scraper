@@ -18,38 +18,35 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of publicationsscraper is to ...
+# Research and CRAN Publications Retrieval Package
+
+## Overview
+
+The publicationsscraper R package offers tools to retrieve research publications from Google Scholar and ORCID, along with CRAN package download statistics. It is tailored for academic researchers in the EBS department who wish to consolidate and analyze their research outputs, while also monitoring their contributions to CRAN, including publication updates and downloads.
+
+The main functions included are:
+- `find_cran_packages`: Searches for CRAN packages by an author's first and last name and returns relevant package information such as the number of downloads and last update date.
+- `get_publications`: Retrieves publications from both Google Scholar and ORCID based on provided IDs.
+- `get_all_publications`: Retrieves publications from multiple authors.
+- `cran_all_pubs`: Combines CRAN package data for multiple authors.
 
 ## Installation
 
-You can install the development version of publicationsscraper from [GitHub](https://github.com/) with:
+To install this package, you can clone the repository and load the package using:
 
-``` r
-# install.packages("devtools")
-devtools::install_github("numbats/achievement-scraper")
+```r
+# Clone the repository
+git clone <https://github.com/numbats/achievement-scraper.git>
+
+# Install required packages
+install.packages(c("pkgsearch", "tibble", "dplyr", "stringr", "scholar", "rorcid"))
+
+# Load the package
+devtools::load_all()
+
 ```
 
-## Example
+## Functions
 
-This is a basic example which shows you how to solve a common problem:
 
-```{r example}
-library(publicationsscraper)
-## basic example code
-```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
