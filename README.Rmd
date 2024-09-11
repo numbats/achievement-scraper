@@ -90,6 +90,8 @@ get_all_publications(authors_df)
 
 ## 4. `cran_all_pubs
 
+This function retrieves CRAN package download statistics for multiple authors by their first and last names.
+
 ```{r}
 cran_authors <- tibble::tibble(
   first_name = c("Michael", "Rob"),
@@ -103,6 +105,9 @@ cran_all_pubs(cran_authors)
 
 `orcid_gsid.csv`
 
+This dataset contains mappings between researchers' names and their respective ORCID and Google Scholar IDs. It is useful for linking and identifying academic profiles across different platforms.
+
+You can load the dataset like this:
 ```{r}
 orcid_gsid <- read_csv("data-raw/orcid_gsid.csv")
 ```
@@ -125,4 +130,7 @@ install.packages(c("pkgsearch", "tibble", "dplyr", "stringr", "scholar", "rorcid
 ```
 
 
+## License
+
+## References
 
