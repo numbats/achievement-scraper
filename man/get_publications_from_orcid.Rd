@@ -17,6 +17,6 @@ The `get_publications_from_orcid` function retrieves publications for given ORCI
 It fetches all works associated with each ORCID ID and combines them into a single data frame.
 }
 \examples{
-# Retrieve publications for specific ORCID IDs
 \dontrun{get_publications_from_orcid(c("0000-0003-2531-9408", "0000-0001-5738-1471"))}
+
 }

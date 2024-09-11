@@ -14,8 +14,8 @@
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' # Retrieve publications for specific ORCID IDs
 #' \dontrun{get_publications_from_orcid(c("0000-0003-2531-9408", "0000-0001-5738-1471"))}
+#'
 #' @name get_publications_from_orcid
 #' @export
 

@@ -1,20 +1,23 @@
-#As per George:
-
-#All articles per year, including their links
-#Summarised articles by author, journals, and rankings
-#For each staff member: h-index, total citations, top 10 cited outputs
-#Package name, number of downloads, date of last update
-#We can aim to have two dataframes: One for research outputs and one for software.
-
-#Software frame
-
-#software_name
-#authors
-#num_downloads
-#last_update_date
-#original_publish_date (if available)
-
-
+#' find_cran_packages
+#'
+#' @description
+#' This function searches for CRAN packages by a given author's first and last name.
+#'
+#' @param first_name A character string representing the author's first name.
+#' @param last_name A character string representing the author's last name.
+#'
+#' @return A data frame returning package name, number of downloads,author names and last update date of the package.
+#'
+#' @importFrom pkgsearch ps
+#' @importFrom tibble tibble
+#' @importFrom dplyr bind_rows filter
+#' @importFrom stringr str_detect
+#'
+#' @examples
+#' \dontrun{find_cran_packages("Michael", "Lydeamore")}
+#'
+#' @name find_cran_packages
+#' @export
 
 find_cran_packages <- function(first_name, last_name) {
 
@@ -25,7 +28,7 @@ find_cran_packages <- function(first_name, last_name) {
     results <- pkgsearch::ps(author_name, size = 200)
 
     num_packages <- length(results$package)
-    
+
     package_frame <- lapply(1:num_packages, function(i) {
 
       tibble(
@@ -34,7 +37,7 @@ find_cran_packages <- function(first_name, last_name) {
         authors = results$package_data[[i]]$Author,
         last_update_date = results$package_data[[i]]$date
       )
-    }) |> 
+    }) |>
       dplyr::bind_rows() |>
       dplyr::filter(stringr::str_detect(authors, author_name))
 

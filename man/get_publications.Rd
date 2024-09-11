@@ -2,7 +2,7 @@
 % Please edit documentation in R/combine.R
 \name{get_publications}
 \alias{get_publications}
-\title{1. get_publications}
+\title{get_publications}
 \usage{
 get_publications(orcid_id, scholar_id)
 }

@@ -1,5 +1,6 @@
 #' orcid_gsid
 #'
+#' @description
 #' This dataset contains the mappings between researcher names and their respective ORCID
 #' and Google Scholar IDs. It is useful for identifying and linking academic profiles across
 #' different platforms.

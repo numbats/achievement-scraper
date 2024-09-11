@@ -1,4 +1,4 @@
-#' Get Publications from Google Scholar
+#' get_publications_from_scholar
 #'
 #' @description
 #' This function retrieves publications for a given Google Scholar ID and formats them into a structured data frame.
@@ -12,7 +12,6 @@
 #'
 #' @examples
 #' \dontrun{get_publications_from_scholar("vamErfkAAAAJ")}
-#'
 #' @name get_publications_from_scholar
 #' @export
 get_publications_from_scholar <- function(scholar_id) {

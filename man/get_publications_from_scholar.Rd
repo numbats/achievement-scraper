@@ -2,7 +2,7 @@
 % Please edit documentation in R/gs_pub.R
 \name{get_publications_from_scholar}
 \alias{get_publications_from_scholar}
-\title{Get Publications from Google Scholar}
+\title{get_publications_from_scholar}
 \usage{
 get_publications_from_scholar(scholar_id)
 }
@@ -16,7 +16,5 @@ A data frame containing all publications for the specified Google Scholar ID.
 This function retrieves publications for a given Google Scholar ID and formats them into a structured data frame.
 }
 \examples{
-# Example usage:
-get_publications_from_scholar("scholar_id_example")
-
+\dontrun{get_publications_from_scholar("vamErfkAAAAJ")}
 }

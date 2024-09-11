@@ -1,4 +1,4 @@
-#' 1. get_publications
+#' get_publications
 #'
 #' @description
 #' This function retrieves research publications from Google Scholar and ORCID based on the provided IDs.
@@ -19,7 +19,6 @@
 #' \dontrun{get_publications("0000-0002-2140-5352", NA)}
 #'
 #' @name get_publications
-#'
 #' @export
 get_publications <- function(orcid_id, scholar_id) {
   if (is.na(scholar_id)) {
@@ -57,34 +56,33 @@ get_publications <- function(orcid_id, scholar_id) {
 
 
 
-#' 2. get_all_publications
+#' get_all_publications
 #'
 #' @description
 #' This function retrieves research publications of all the authors from
 #' Google Scholar and ORCID based on the provided IDs.
-
-#' @param orcid_id list of ORCID ID
-#' @param scholar_id list of Google Scholar ID
-#' @return A combined dataframe of research outputs for all authors publications.
+#'
+#' @param authors_df A dataframe containing columns `orcid_id` and `scholar_id`
+#'                   for each author.
+#' @return A combined dataframe of research outputs for all authors' publications.
 #' @examples
-#' \dontrun{orcid_ids <- c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
-#' \dontrun{scholar_ids <- c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)}
-#' \dontrun{all_publications <- get_all_publications(orcid_ids, scholar_ids)
-#' print(all_publications)
+#' \dontrun{
+#' authors_df <- tibble::tibble(
+#'   orcid_id = c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700"),
+#'   scholar_id = c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)
+#' )
+#' get_all_publications(authors_df)
 #' }
-#'
 #' @name get_all_publications
-#'
 #' @export
-get_all_publications <- function(orcid_ids, scholar_ids) {
+get_all_publications <- function(authors_df) {
   combined_pubs <- list()
 
-  for (i in seq_along(orcid_ids)) {
-    orcid_id <- orcid_ids[i]
-    scholar_id <- scholar_ids[i]
+  for (i in seq_along(authors_df$orcid_id)) {
+    orcid_id <- authors_df$orcid_id[i]
+    scholar_id <- authors_df$scholar_id[i]
 
     multiple_pubs <- get_publications(orcid_id, scholar_id)
-
 
     combined_pubs[[i]] <- multiple_pubs
   }
@@ -96,7 +94,7 @@ get_all_publications <- function(orcid_ids, scholar_ids) {
 
 
 
-#' 3. cran_all_pubs
+#' cran_all_pubs
 #'
 #' @description
 #' This function combines the cran publications for all authors.
@@ -105,17 +103,19 @@ get_all_publications <- function(orcid_ids, scholar_ids) {
 #' @return A combined dataframe of CRAN package downloads for all authors.
 #' @examples
 #' \dontrun{
-  #' authors_list <- list(
-  #'   list(first_name = "Michael", last_name = "Lydeamore"),
-  #'   list(first_name = "Rob", last_name = "Hyndman")
-  #' )
-  #' }
-  #' \dontrun{cran_all_pubs(authors_list)}
-  #' @name cran_all_pubs
+#' cran_authors <- tibble::tibble(
+#'   first_name = c("Michael", "Rob"),
+#'   last_name = c("Lydeamore", "Hyndman")
+#' )
+#' }
+
+#' \dontrun{cran_all_pubs(cran_authors)}
+#'
+#' @name cran_all_pubs
 #' @export
 cran_all_pubs <- function(authors) {
-  combined_df <- purrr::map_dfr(authors, function(person) {
-    find_cran_packages(person$first_name, person$last_name)
+  combined_df <- purrr::map_dfr(1:nrow(authors), function(i) {
+    find_cran_packages(authors$first_name[i], authors$last_name[i])
   })
 
   combined_df <- combined_df |>

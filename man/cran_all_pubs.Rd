@@ -2,7 +2,7 @@
 % Please edit documentation in R/combine.R
 \name{cran_all_pubs}
 \alias{cran_all_pubs}
-\title{3. cran_all_pubs}
+\title{cran_all_pubs}
 \usage{
 cran_all_pubs(authors)
 }
@@ -17,10 +17,11 @@ This function combines the cran publications for all authors.
 }
 \examples{
 \dontrun{
-authors_list <- list(
-  list(first_name = "Michael", last_name = "Lydeamore"),
-  list(first_name = "Rob", last_name = "Hyndman")
+cran_authors <- tibble::tibble(
+  first_name = c("Michael", "Rob"),
+  last_name = c("Lydeamore", "Hyndman")
 )
 }
-\dontrun{cran_all_pubs(authors_list)}
+\dontrun{cran_all_pubs(cran_authors)}
+
 }

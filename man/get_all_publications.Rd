@@ -2,27 +2,27 @@
 % Please edit documentation in R/combine.R
 \name{get_all_publications}
 \alias{get_all_publications}
-\title{2. get_all_publications}
+\title{get_all_publications}
 \usage{
-get_all_publications(orcid_ids, scholar_ids)
+get_all_publications(authors_df)
 }
 \arguments{
-\item{orcid_id}{list of ORCID ID}
-
-\item{scholar_id}{list of Google Scholar ID}
+\item{authors_df}{A dataframe containing columns `orcid_id` and `scholar_id`
+for each author.}
 }
 \value{
-A combined dataframe of research outputs for all authors publications.
+A combined dataframe of research outputs for all authors' publications.
 }
 \description{
 This function retrieves research publications of all the authors from
 Google Scholar and ORCID based on the provided IDs.
 }
 \examples{
-\dontrun{orcid_ids <- c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700")}
-\dontrun{scholar_ids <- c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)}
-\dontrun{all_publications <- get_all_publications(orcid_ids, scholar_ids)
-print(all_publications)
+\dontrun{
+authors_df <- tibble::tibble(
+  orcid_id = c("0000-0002-2140-5352", "0000-0002-1825-0097", NA, "0000-0001-5109-3700"),
+  scholar_id = c(NA, "vamErfkAAAAJ", "4bahYMkAAAAJ", NA)
+)
+get_all_publications(authors_df)
 }
-
 }
