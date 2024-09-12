@@ -87,6 +87,9 @@ get_all_publications <- function(authors_df) {
     combined_pubs[[i]] <- multiple_pubs
   }
 
+  nr <- lapply(combined_pubs, NROW)
+  combined_pubs <- combined_pubs[nr > 0]
+
   return(tibble::as_tibble(dplyr::bind_rows(combined_pubs)))
 }
 

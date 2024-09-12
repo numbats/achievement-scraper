@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{loading libraries}
+```{r loading libraries}
 library(publicationsscraper)
 library(ggplot2)
 ```
@@ -15,10 +15,10 @@ library(ggplot2)
 
 ```{r}
 # Publications of each author by year
-get_publications("0000-0002-2140-5352", "vamErfkAAAAJ") %>%
-  dplyr::filter(!is.na(publication_date)) %>%
-  dplyr::count(publication_date) %>%
-  ggplot(aes(x = as.numeric(publication_date), y = n)) +  
+get_publications("0000-0002-2140-5352", "vamErfkAAAAJ") |>
+  dplyr::filter(!is.na(publication_year)) |>
+  dplyr::count(publication_year) |>
+  ggplot(aes(x = as.numeric(publication_year), y = n)) +  
   geom_line(color= "red") +
   theme_minimal() +
   labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
@@ -26,9 +26,9 @@ get_publications("0000-0002-2140-5352", "vamErfkAAAAJ") %>%
 
 ```{r}
 # Top Packages by Number of Downloads
-cran_all_pubs(authors_list) %>%
-  dplyr::arrange(desc(downloads)) %>%
-  dplyr::top_n(10, downloads) %>%
+cran_all_pubs(authors_list) |>
+  dplyr::arrange(desc(downloads)) |>
+  dplyr::top_n(10, downloads) |>
   ggplot(aes(x = reorder(name, downloads), y = downloads)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
@@ -37,11 +37,11 @@ cran_all_pubs(authors_list) %>%
 
 ```{r}
 # Total Downloads by Author
-cran_all_pubs(authors_list) %>%
-  dplyr::mutate(authors = stringr::str_extract(authors, "[^\\[]+")) %>%
-  dplyr::group_by(authors) %>%
-  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) %>%
-  dplyr::arrange(desc(total_downloads)) %>%
+cran_all_pubs(authors_list) |>
+  dplyr::mutate(authors = stringr::str_extract(authors, "[^\\[]+")) |>
+  dplyr::group_by(authors) |>
+  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>
+  dplyr::arrange(desc(total_downloads)) |>
   ggplot(aes(x = reorder(authors, total_downloads), y = total_downloads)) +
   geom_bar(stat = "identity", fill = "hotpink") +
   coord_flip() +
@@ -53,10 +53,10 @@ cran_all_pubs(authors_list) %>%
 
 ```{r}
 # Top 10 Authors by Number of Publications
-get_all_publications(orcid_ids, scholar_ids) %>%
-  tidyr::separate_rows(authors, sep = ", ") %>%
-  dplyr::count(authors, sort = TRUE) %>%
-  dplyr::top_n(10, n) %>%
+get_all_publications(orcid_ids, scholar_ids) |>
+  tidyr::separate_rows(authors, sep = ", ") |>
+  dplyr::count(authors, sort = TRUE) |>
+  dplyr::top_n(10, n) |>
   ggplot(aes(x = reorder(authors, n), y = n)) +
   geom_bar(stat = "identity", fill = "purple") +
   coord_flip() +
@@ -68,9 +68,9 @@ get_all_publications(orcid_ids, scholar_ids) %>%
 ```{r}
 library(ggplot2)
 library(lubridate)
-cran_all_pubs(authors_list) %>%
-  dplyr::mutate(last_update_date = lubridate::ymd_hms(last_update_date)) %>%
-  dplyr::arrange(last_update_date) %>%
+cran_all_pubs(authors_list) |>
+  dplyr::mutate(last_update_date = lubridate::ymd_hms(last_update_date)) |>
+  dplyr::arrange(last_update_date) |>
   ggplot(aes(x = last_update_date, y = downloads, group = 1)) + 
   geom_line(color = "blue", size = 1) +
   theme_minimal() +

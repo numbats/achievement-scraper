@@ -24,14 +24,19 @@ get_publications_from_orcid <- function(orcid_ids) {
   all_pubs <- list()
 
   for (orcid_id in orcid_ids) {
-    pubs <- rorcid::orcid_works(orcid_id)
-    if (!is.null(pubs[[1]]$works)) {
+    pubs <- tryCatch(
+      rorcid::orcid_works(orcid_id)
+    )
+    if (inherits(pubs, "try-error")) {
+      stop("Invalid ORCID ID")
+    }
+    if (!is.null(pubs[[1]]$works) && nrow(pubs[[1]]$works > 0)) {
       all_pubs[[orcid_id]] <- pubs[[1]]$works %>%
         dplyr::select(
           title = `title.title.value`,
           DOI = `external-ids.external-id`,
           authors = `source.assertion-origin-name.value`,
-          publication_date = `publication-date.year.value`,
+          publication_year = `publication-date.year.value`,
           journal_name = `journal-title.value`
         ) |>
         mutate(
@@ -53,7 +58,9 @@ get_publications_from_orcid <- function(orcid_ids) {
                 return (doi[1])
               }
             }
-          ), orcid_id = orcid_id
+          ),
+          orcid_id = orcid_id,
+          publication_year = as.numeric(publication_year)
         )
     }
   }

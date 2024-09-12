@@ -19,15 +19,15 @@ get_publications_from_scholar <- function(scholar_id) {
 
   # Check if the column exists, if not, create a placeholder
   if (!"doi" %in% colnames(publications)) {
-    publications$doi <- NA
+    publications$doi <- NA_character_
   }
 
   # Ensure other columns exist
   if (!"journal" %in% colnames(publications)) {
-    publications$journal <- NA
+    publications$journal <- NA_character_
   }
-  if (!"pub_date" %in% colnames(publications)) {
-    publications$pub_date <- NA
+  if (!"year" %in% colnames(publications)) {
+    publications$year <- NA_integer_
   }
 
   # required research frame structure
@@ -36,7 +36,7 @@ get_publications_from_scholar <- function(scholar_id) {
       title = title,
       DOI = doi,
       authors = author,
-      publication_year = pub_date,
+      publication_year = year,
       journal_name = journal
     )
 

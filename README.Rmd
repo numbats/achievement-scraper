@@ -53,6 +53,7 @@ devtools::load_all()
 This function retrieves information about CRAN packages authored by a specified individual. It returns a data frame containing the package name, number of downloads, the authors, and the last update date.
 
 ```{r}
+library(publicationsscraper)
 find_cran_packages("Michael", "Lydeamore")
 ```
 
@@ -107,9 +108,8 @@ cran_all_pubs(cran_authors)
 
 This dataset contains mappings between researchers' names and their respective ORCID and Google Scholar IDs. It is useful for linking and identifying academic profiles across different platforms.
 
-You can load the dataset like this:
 ```{r}
-orcid_gsid <- read_csv("data-raw/orcid_gsid.csv")
+print(orcid_gsid)
 ```
 
 
@@ -125,7 +125,7 @@ This package relies on the following R packages:
 - rorcid
 
 You can install these dependencies using install.packages()
-```{r}
+```{r eval=FALSE}
 install.packages(c("pkgsearch", "tibble", "dplyr", "stringr", "scholar", "rorcid"))
 ```
 
