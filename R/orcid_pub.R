@@ -25,11 +25,15 @@ get_publications_from_orcid <- function(orcid_ids) {
 
   for (orcid_id in orcid_ids) {
     pubs <- tryCatch(
-      rorcid::orcid_works(orcid_id)
+      rorcid::orcid_works(orcid_id),
+      error = function(e) {
+        if (inherits(e, "http_404")) {
+          stop(sprintf("Invalid ORCID ID: %s", orcid_id))
+        } else {
+          print(e)
+        }
+      }
     )
-    if (inherits(pubs, "try-error")) {
-      stop("Invalid ORCID ID")
-    }
     if (!is.null(pubs[[1]]$works) && nrow(pubs[[1]]$works > 0)) {
       all_pubs[[orcid_id]] <- pubs[[1]]$works %>%
         dplyr::select(
