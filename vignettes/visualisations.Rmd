@@ -72,7 +72,7 @@ top_packages <- cran_data |>
 ggplot(top_packages, aes(x = reorder(name, total_downloads), y = total_downloads)) +
   geom_bar(stat = "identity", fill = "blue") +
   coord_flip() +
-  labs(title = "Top 5 CRAN Packages by Downloads (Monash EBS Staff)", 
+  labs(title = "Top 5 CRAN Packages by Monash EBS Staff", 
        x = "Package Name", 
        y = "Downloads") +
   theme_minimal()
