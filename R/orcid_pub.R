@@ -34,7 +34,7 @@ get_publications_from_orcid <- function(orcid_ids) {
         }
       }
     )
-    if (!is.null(pubs[[1]]$works) && nrow(pubs[[1]]$works > 0)) {
+    if (!is.null(pubs[[1]]$works) && nrow(pubs[[1]]$works) > 0) {
       all_pubs[[orcid_id]] <- pubs[[1]]$works %>%
         dplyr::select(
           title = `title.title.value`,
