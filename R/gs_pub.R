@@ -1,14 +1,15 @@
 #' get_publications_from_scholar
 #'
 #' @description
-#' This function retrieves publications for a given Google Scholar ID and formats them into a structured data frame.
+#' This function retrieves publications for a given Google Scholar ID and formats them into a structured tibble.
 #'
 #' @param scholar_id A character string representing the Google Scholar ID.
 #'
-#' @return A data frame containing all publications for the specified Google Scholar ID.
+#' @return A tibble containing all publications for the specified Google Scholar ID.
 #'
 #' @importFrom scholar get_publications
 #' @importFrom dplyr select
+#' @importFrom tibble tibble
 #'
 #' @examples
 #' \dontrun{get_publications_from_scholar("vamErfkAAAAJ")}
@@ -17,12 +18,12 @@
 get_publications_from_scholar <- function(scholar_id) {
   publications <- scholar::get_publications(scholar_id)
 
-  # Check if the column exists, if not, create a placeholder
+  # See if the column exists, if not, create a placeholder
   if (!"doi" %in% colnames(publications)) {
     publications$doi <- NA_character_
   }
 
-  # Ensure other columns exist
+  # Make sure other columns exist
   if (!"journal" %in% colnames(publications)) {
     publications$journal <- NA_character_
   }
@@ -30,16 +31,15 @@ get_publications_from_scholar <- function(scholar_id) {
     publications$year <- NA_integer_
   }
 
-  # required research frame structure
-  scholar_df <- publications %>%
-    dplyr::select(
-      title = title,
-      DOI = doi,
-      authors = author,
-      publication_year = year,
-      journal_name = journal
-    )
+  # data as a tibble
+  scholar_tbl <- tibble::tibble(
+    title = publications$title,
+    DOI = publications$doi,
+    authors = publications$author,
+    publication_year = publications$year,
+    journal_name = publications$journal
+  )
 
-  return(scholar_df)
+  return(tibble::as_tibble(scholar_tbl))
 }
 
