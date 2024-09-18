@@ -29,9 +29,7 @@ test_that("get_publications_from_orcid returns empty data frame for ORCID with n
 
 test_that("get_publications_from_orcid returns empty data frame for invalid ORCID IDs", {
   orcid_ids <- c("0000-0000-0000-0000")
-  result <- get_publications_from_orcid(orcid_ids)
-  expect_s3_class(result, "data.frame")
-  expect_equal(nrow(result), 0)
-}) #not working
+  expect_error(get_publications_from_orcid(orcid_ids), "Invalid ORCID ID")
+})
 
 
