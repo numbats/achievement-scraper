@@ -117,6 +117,10 @@ get_all_publications <- function(authors_df) {
 #' @name cran_all_pubs
 #' @export
 cran_all_pubs <- function(authors) {
+  if (nrow(authors) == 0) {
+    return(tibble::tibble(name = character(), downloads = numeric(), authors = character(), last_update_date = character()))
+  }
+
   combined_df <- purrr::map_dfr(1:nrow(authors), function(i) {
     find_cran_packages(authors$first_name[i], authors$last_name[i])
   })
@@ -126,4 +130,3 @@ cran_all_pubs <- function(authors) {
 
   return(tibble::as_tibble(combined_df))
 }
-
