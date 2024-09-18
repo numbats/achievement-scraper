@@ -34,6 +34,50 @@ cran_all_pubs(authors_list) |>
   coord_flip() +
   labs(title = "Top 10 Packages by Downloads", x = "Package Name", y = "Downloads")
 ```
+```{r}
+# Top 5 CRAN Packages by Downloads (Monash EBS Staff)
+
+ebs_authors <- tibble::tibble(
+  first_name = c("Akanksha", "Alan", "Andrew", "Ann", "Athanasios", 
+                 "Benjamin", "Bin", "Brett", "Catherine", "Charanjit", 
+                 "Damjan", "Dan", "Daniel", "David", "Didier", 
+                 "Donald", "Duangkamon", "Farshid", "Gael", "George", 
+                 "Geraldine", "Hamza", "Heather", "Hsein", "Jack", 
+                 "Jackie", "Janjala", "Jessica", "Jiti", "Joan", "John", 
+                 "Julie", "Kate", "Keith", "Klaus", "Maxwell", "Maziar", 
+                 "Mervyn", "Natalia", "Ole", "Otavio", "Param", 
+                 "Ralph", "Rami", "Robert", "Ruben", "Shanika", 
+                 "Tissa", "Wei", "Xibin", "Xueyan", "Yu"),
+  last_name = c("Negi", "Powell", "Matthews", "Maharaj", "Pantelous", 
+                "Wong", "Peng", "Inder", "Forbes", "Kaur", 
+                "Vukcevic", "Zhu", "Melser", "Frazier", "Nibbering", 
+                "Poskitt", "Chotikapanich", "Vahid-Araghi", "Martin", "Athanasopoulos", 
+                "Roberts", "Hanbali", "Anderson", "Kew", "Jewson", 
+                "Li", "Chirakijja", "Leung", "Gao", "Tan", "Stapleton", 
+                "Cook", "Saunders", "McLaren", "Ackermann", "King", "Nikpour", 
+                "Silvapulle", "Bailey", "Maneesoonthorn", "Bartalotti", "Silvapulle", 
+                "Snyder", "Tabri", "Brooks", "Loaiza Maya", "Wickramasuriya", 
+                "Galagedera", "Wei", "Zhang", "Zhao", "Bai")
+)
+
+# Retrieve Monash EBS authors
+cran_data <- cran_all_pubs(ebs_authors)
+
+top_packages <- cran_data |>
+  dplyr::group_by(name) |>
+  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>
+  dplyr::arrange(desc(total_downloads)) |>
+  dplyr::top_n(5, total_downloads)
+
+ggplot(top_packages, aes(x = reorder(name, total_downloads), y = total_downloads)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  coord_flip() +
+  labs(title = "Top 5 CRAN Packages by Downloads (Monash EBS Staff)", 
+       x = "Package Name", 
+       y = "Downloads") +
+  theme_minimal()
+
+```
 
 ```{r}
 # Total Downloads by Author
