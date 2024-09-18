@@ -39,6 +39,8 @@ cran_all_pubs(cran_authors) |>
   coord_flip() +
   labs(title = "Top 10 Packages by Downloads", x = "Package Name", y = "Downloads")
 ```
+
+
 ```{r}
 # Top 5 CRAN Packages by Downloads (Monash EBS Staff)
 
@@ -65,7 +67,7 @@ ebs_authors <- tibble::tibble(
                 "Galagedera", "Wei", "Zhang", "Zhao", "Bai")
 )
 
-# Retrieve Monash EBS authors
+# Monash EBS authors
 cran_data <- cran_all_pubs(ebs_authors)
 
 top_packages <- cran_data |>
@@ -75,7 +77,7 @@ top_packages <- cran_data |>
   dplyr::top_n(5, total_downloads)
 
 ggplot(top_packages, aes(x = reorder(name, total_downloads), y = total_downloads)) +
-  geom_bar(stat = "identity", fill = "blue") +
+  geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
   labs(title = "Top 5 CRAN Packages by Monash EBS Staff", 
        x = "Package Name", 
@@ -101,20 +103,51 @@ cran_all_pubs(cran_authors) |>
 
 
 ```{r}
-# Top 10 Authors by Number of Publications
-get_all_publications(orcid_ids, scholar_ids) |>
-  tidyr::separate_rows(authors, sep = ", ") |>
-  dplyr::count(authors, sort = TRUE) |>
-  dplyr::top_n(10, n) |>
-  ggplot(aes(x = reorder(authors, n), y = n)) +
-  geom_bar(stat = "identity", fill = "purple") +
+#Total downloads by Monash EBS authors
+
+# Clean and calculate total downloads by EBS authors
+cran_data_clean <- cran_data |>
+  dplyr::mutate(authors = stringr::str_extract(authors, "^[^\\[]+")) |>  
+  dplyr::mutate(authors = stringr::str_squish(authors)) |>  
+  dplyr::group_by(authors) |>
+  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>  
+  dplyr::arrange(desc(total_downloads))  # Sort by total downloads
+
+# Plot 
+ggplot(cran_data_clean, aes(x = reorder(authors, total_downloads), y = total_downloads)) +
+  geom_bar(stat = "identity", fill = "hotpink") +
   coord_flip() +
   theme_minimal() +
-  labs(title = "Top 10 Authors by Number of Publications", x = "Author", y = "Number of Publications")
+  labs(title = "Total Downloads by Monash EBS Authors", 
+       x = "Author", 
+       y = "Total Downloads")
+
 ```
 
 
 ```{r}
+# Group by authors and count the number of publications
+top_10_authors <- cran_data |>
+  dplyr::mutate(authors = stringr::str_extract(authors, "^[^\\[]+")) |>  
+  dplyr::mutate(authors = stringr::str_squish(authors)) |>  
+  dplyr::group_by(authors) |>
+  dplyr::summarise(total_publications = n()) |>  # Count the no of publications
+  dplyr::arrange(desc(total_publications)) |>  # Sort by no of publications
+  dplyr::top_n(10, total_publications)  # Top 10 authors
+
+# Plot top 10 authors
+ggplot(top_10_authors, aes(x = reorder(authors, total_publications), y = total_publications)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Top 10 Authors by Number of Publications", x = "Author", y = "Number of Publications")
+
+```
+
+
+
+```{r}
+# Downloads Over Time
 library(ggplot2)
 library(lubridate)
 cran_all_pubs(cran_authors) |>
