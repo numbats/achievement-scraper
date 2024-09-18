@@ -35,14 +35,19 @@ get_publications_from_orcid <- function(orcid_ids) {
       }
     )
     if (!is.null(pubs[[1]]$works) && nrow(pubs[[1]]$works) > 0) {
-      all_pubs[[orcid_id]] <- pubs[[1]]$works %>%
+      all_pubs[[orcid_id]] <- pubs[[1]]$works |>
         dplyr::select(
-          title = `title.title.value`,
-          DOI = `external-ids.external-id`,
-          authors = `source.assertion-origin-name.value`,
-          publication_year = `publication-date.year.value`,
-          journal_name = `journal-title.value`
+          title = dplyr::matches("title.title.value"),
+          DOI = dplyr::matches("external-ids.external-id"),
+          authors = dplyr::matches("source.assertion-origin-name.value"),
+          publication_year = dplyr::matches("publication-date.year.value"),
+          journal_name = dplyr::matches("journal-title.value")
         ) |>
+        append_column_if_missing("title", default_value = NA_character_) |>
+        append_column_if_missing("DOI", default_value = NA_character_) |>
+        append_column_if_missing("authors", default_value = NA_character_) |>
+        append_column_if_missing("publication_year", default_value = NA_integer_) |>
+        append_column_if_missing("journal_name", default_value = NA_character_) |>
         mutate(
           # the `external-ids` contains lots of things, not just DOI. It is a list containing a dataframe
           # Mapping over that list, we can filter out just the 'doi' type

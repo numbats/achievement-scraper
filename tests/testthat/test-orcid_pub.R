@@ -12,7 +12,14 @@ test_that("get_publications_from_orcid returns a valid data frame", {
   expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name", "orcid_id") %in% colnames(result)))
   expect_true(nrow(result) > 0)
 })
-#orcid_id <- 0000-0001-9379-0010 (Charanjit Kaur)
+
+test_that("get_publications_from_orcid works even when certain columns don't exist", {
+  result <- get_publications_from_orcid("0000-0001-9379-0010")
+
+  expect_true(nrow(result) > 0)
+  expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name", "orcid_id") %in% colnames(result)))
+})
+#
 
 test_that("get_publications_from_orcid returns empty data frame for ORCID with no works", {
   orcid_ids <- c("0009-0008-4231-8291") #parnika
