@@ -96,7 +96,8 @@ test_that("cran_all_pubs returns a dataframe for valid authors", {
   result <- cran_all_pubs(cran_authors)
   expect_s3_class(result, "tbl_df")
   expect_true(all(c("name", "downloads", "authors", "last_update_date") %in% colnames(result)))
-
+  years <- format(as.Date(result$last_update_date), "%Y")
+  expect_true(all(!is.na(years)))
   expect_gt(nrow(result), 0)
 })
 
@@ -107,8 +108,6 @@ test_that("cran_all_pubs returns a dataframe for a single valid author", {
   result <- cran_all_pubs(cran_authors)
   expect_s3_class(result, "tbl_df")
   expect_true(all(c("name", "downloads", "authors", "last_update_date") %in% colnames(result)))
-  years <- format(as.Date(result$last_update_date), "%Y")
-  expect_true(all(!is.na(years)))
   expect_gt(nrow(result), 0)
 })
 
