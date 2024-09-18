@@ -18,4 +18,10 @@ test_that("find_cran_packages handles unknown author", {
   result <- find_cran_packages("Harvey", "Spector")
   expect_equal(nrow(result), 0)
 })
-#returns a year
+
+test_that("find_cran_packages returns the correct year", {
+  result <- find_cran_packages("Michael", "Lydeamore")
+  expect_true("last_update_date" %in% names(result))
+  years <- format(as.Date(result$last_update_date), "%Y")
+  expect_true(all(!is.na(years)))
+})
