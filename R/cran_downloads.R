@@ -29,6 +29,17 @@ find_cran_packages <- function(first_name, last_name) {
 
     num_packages <- length(results$package)
 
+    if (num_packages == 0) {
+      return(
+        tibble::tibble(
+          name = character(0),
+          downloads = numeric(0),
+          authors = character(0),
+          last_update_date = character(0)
+        )
+      )
+    }
+
     package_frame <- lapply(1:num_packages, function(i) {
 
       tibble(
