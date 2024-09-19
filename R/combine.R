@@ -54,8 +54,6 @@ get_publications <- function(orcid_id, scholar_id) {
 
 
 
-
-
 #' get_all_publications
 #'
 #' @description
