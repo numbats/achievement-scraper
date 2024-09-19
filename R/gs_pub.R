@@ -16,6 +16,17 @@
 #' @name get_publications_from_scholar
 #' @export
 get_publications_from_scholar <- function(scholar_id) {
+
+  if (length(scholar_id) == 0) {
+    return(tibble::tibble(
+      title = character(0),
+      DOI = character(0),
+      authors = character(0),
+      publication_year = integer(0),
+      journal_name = character(0)
+    ))
+  }
+
   publications <- scholar::get_publications(scholar_id)
 
   # See if the column exists, if not, create a placeholder
@@ -36,7 +47,7 @@ get_publications_from_scholar <- function(scholar_id) {
     title = publications$title,
     DOI = publications$doi,
     authors = publications$author,
-    publication_year = publications$year,
+    publication_year = as.integer(publications$year),
     journal_name = publications$journal
   )
 
