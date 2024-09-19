@@ -111,12 +111,10 @@ get_publications_from_scholar <- function(scholar_id) {
 
   publications <- scholar::get_publications(scholar_id)
 
-  # See if the column exists, if not, create a placeholder
   if (!"doi" %in% colnames(publications)) {
     publications$doi <- NA_character_
   }
 
-  # Make sure other columns exist
   if (!"journal" %in% colnames(publications)) {
     publications$journal <- NA_character_
   }
@@ -124,7 +122,6 @@ get_publications_from_scholar <- function(scholar_id) {
     publications$year <- NA_integer_
   }
 
-  # data as a tibble
   scholar_tbl <- tibble::tibble(
     title = publications$title,
     DOI = publications$doi,
@@ -162,10 +159,8 @@ get_publications_from_scholar <- function(scholar_id) {
 
 find_cran_packages <- function(first_name, last_name) {
 
-  # Assuming there are columns 'first_name' and 'last_name' in the CSV
   author_name <- paste(first_name, last_name)
 
-  # Loop through names and find packages
   results <- pkgsearch::ps(author_name, size = 200)
 
   num_packages <- length(results$package)
@@ -193,7 +188,6 @@ find_cran_packages <- function(first_name, last_name) {
     dplyr::bind_rows() |>
     dplyr::filter(stringr::str_detect(authors, author_name))
 
-  # Return unique packages only
   unique(package_frame)
 }
 

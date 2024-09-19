@@ -7,158 +7,102 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r loading libraries}
+```{r loading libraries, warning=FALSE, message=FALSE}
 library(publicationsscraper)
 library(ggplot2)
+library(dplyr)
 ```
 
 
+# Top Authors by Publications
+```{r, warning=FALSE}
+author_names <- paste(orcid_gsid$first_name, orcid_gsid$last_name)
+get_all_publications(orcid_gsid) |> 
+  filter(authors %in% author_names) |>  
+  group_by(authors) |>  
+  summarise(total_publications = n()) |>  
+  arrange(desc(total_publications)) |>  
+  slice_max(total_publications, n = 5) |>  
+  ggplot(aes(x = reorder(authors, total_publications), 
+             y = total_publications, 
+             fill = ifelse(authors == first(authors), "highlight", "normal"))) + 
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(values = c("highlight" = "red", "normal" = "green"), guide = FALSE) +  
+  theme_light() +
+  labs(title = "Top 5 Authors by Number of Publications",
+       x = "Author",
+       y = "Number of Publications")
+```
+
+# Publications by Year 
 ```{r}
-# Publications of each author by year
-get_publications("0000-0002-2140-5352", "vamErfkAAAAJ") |>
+get_all_publications(orcid_gsid) |>
   dplyr::filter(!is.na(publication_year)) |>
   dplyr::count(publication_year) |>
   ggplot(aes(x = as.numeric(publication_year), y = n)) +  
   geom_line(color= "red") +
-  theme_minimal() +
+  theme_light() +
   labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
 ```
 
+# Publications by Journal
 ```{r}
-# Define cran_authors
-cran_authors <- tibble::tibble(
-  first_name = c("Michael", "Rob"),
-  last_name = c("Lydeamore", "Hyndman")
-)
-# Top Packages by Number of Downloads
-cran_all_pubs(cran_authors) |>
-  dplyr::arrange(desc(downloads)) |>
-  dplyr::top_n(10, downloads) |>
-  ggplot(aes(x = reorder(name, downloads), y = downloads)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
+get_all_publications(orcid_gsid) |> 
+  filter(!is.na(journal_name) & journal_name != "") |> 
+  group_by(journal_name) |> 
+  summarise(total_publications = n()) |> 
+  arrange(desc(total_publications)) |> 
+  slice_max(total_publications, n = 10) |>  
+  ggplot(aes(x = reorder(journal_name, total_publications), y = total_publications))  +
+  geom_bar(stat = "identity", fill = "lightskyblue4") +
   coord_flip() +
-  labs(title = "Top 10 Packages by Downloads", x = "Package Name", y = "Downloads")
+  theme_light() +
+  labs(title = "Top 10 Journals by Number of Publications",
+       x = "Journal",
+       y = "Number of Publications")
 ```
 
 
+# Top Packages by Downloads 
 ```{r}
-# Top 5 CRAN Packages by Downloads (Monash EBS Staff)
-
-ebs_authors <- tibble::tibble(
-  first_name = c("Akanksha", "Alan", "Andrew", "Ann", "Athanasios", 
-                 "Benjamin", "Bin", "Brett", "Catherine", "Charanjit", 
-                 "Damjan", "Dan", "Daniel", "David", "Didier", 
-                 "Donald", "Duangkamon", "Farshid", "Gael", "George", 
-                 "Geraldine", "Hamza", "Heather", "Hsein", "Jack", 
-                 "Jackie", "Janjala", "Jessica", "Jiti", "Joan", "John", 
-                 "Julie", "Kate", "Keith", "Klaus", "Maxwell", "Maziar", 
-                 "Mervyn", "Natalia", "Ole", "Otavio", "Param", 
-                 "Ralph", "Rami", "Robert", "Ruben", "Shanika", 
-                 "Tissa", "Wei", "Xibin", "Xueyan", "Yu"),
-  last_name = c("Negi", "Powell", "Matthews", "Maharaj", "Pantelous", 
-                "Wong", "Peng", "Inder", "Forbes", "Kaur", 
-                "Vukcevic", "Zhu", "Melser", "Frazier", "Nibbering", 
-                "Poskitt", "Chotikapanich", "Vahid-Araghi", "Martin", "Athanasopoulos", 
-                "Roberts", "Hanbali", "Anderson", "Kew", "Jewson", 
-                "Li", "Chirakijja", "Leung", "Gao", "Tan", "Stapleton", 
-                "Cook", "Saunders", "McLaren", "Ackermann", "King", "Nikpour", 
-                "Silvapulle", "Bailey", "Maneesoonthorn", "Bartalotti", "Silvapulle", 
-                "Snyder", "Tabri", "Brooks", "Loaiza Maya", "Wickramasuriya", 
-                "Galagedera", "Wei", "Zhang", "Zhao", "Bai")
-)
-
-# Monash EBS authors
-cran_data <- cran_all_pubs(ebs_authors)
-
-top_packages <- cran_data |>
-  dplyr::group_by(name) |>
-  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>
-  dplyr::arrange(desc(total_downloads)) |>
-  dplyr::top_n(5, total_downloads)
-
-ggplot(top_packages, aes(x = reorder(name, total_downloads), y = total_downloads)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  coord_flip() +
-  labs(title = "Top 5 CRAN Packages by Monash EBS Staff", 
+cran_all_pubs(orcid_gsid) |> 
+  dplyr::arrange(desc(downloads)) |> 
+  dplyr::top_n(10, downloads) |> 
+  ggplot(aes(x = reorder(name, downloads), 
+             y = downloads, 
+             fill = ifelse(name == first(name), "highlight", "normal"))) +  
+  geom_bar(stat = "identity") + 
+  scale_fill_manual(values = c("highlight" = "blue", "normal" = "gold"), guide = FALSE) +  
+  theme_light() + 
+  coord_flip() + 
+  labs(title = "Top 10 Packages by Downloads", 
        x = "Package Name", 
-       y = "Downloads") +
-  theme_minimal()
-
+       y = "Downloads")
 ```
 
+# Top Authors by Downloads
+
 ```{r}
-# Total Downloads by Author
-cran_all_pubs(cran_authors) |>
-  dplyr::mutate(authors = stringr::str_extract(authors, "[^\\[]+")) |>
-  dplyr::group_by(authors) |>
-  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>
-  dplyr::arrange(desc(total_downloads)) |>
+# loop the authors
+# only monash authors
+
+cran_all_pubs(orcid_gsid) |> 
+  group_by(authors) |> 
+  summarise(total_downloads = sum(downloads, na.rm = TRUE)) |> 
+  arrange(desc(total_downloads)) |> 
+  slice_max(total_downloads, n = 10) |> 
   ggplot(aes(x = reorder(authors, total_downloads), y = total_downloads)) +
-  geom_bar(stat = "identity", fill = "hotpink") +
+  geom_bar(stat = "identity", fill = "orange") +
   coord_flip() +
-  theme_minimal() +
-  labs(title = "Total Downloads by Author", x = "Author", y = "Total Downloads")
-
-```
-
-
-```{r}
-#Total downloads by Monash EBS authors
-
-# Clean and calculate total downloads by EBS authors
-cran_data_clean <- cran_data |>
-  dplyr::mutate(authors = stringr::str_extract(authors, "^[^\\[]+")) |>  
-  dplyr::mutate(authors = stringr::str_squish(authors)) |>  
-  dplyr::group_by(authors) |>
-  dplyr::summarise(total_downloads = sum(downloads, na.rm = TRUE)) |>  
-  dplyr::arrange(desc(total_downloads))  # Sort by total downloads
-
-# Plot 
-ggplot(cran_data_clean, aes(x = reorder(authors, total_downloads), y = total_downloads)) +
-  geom_bar(stat = "identity", fill = "hotpink") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Total Downloads by Monash EBS Authors", 
-       x = "Author", 
+  theme_light() +
+  labs(title = "Top 10 Authors by Package Downloads",
+       x = "Author",
        y = "Total Downloads")
-
-```
-
-
-```{r}
-# Group by authors and count the number of publications
-top_10_authors <- cran_data |>
-  dplyr::mutate(authors = stringr::str_extract(authors, "^[^\\[]+")) |>  
-  dplyr::mutate(authors = stringr::str_squish(authors)) |>  
-  dplyr::group_by(authors) |>
-  dplyr::summarise(total_publications = n()) |>  # Count the no of publications
-  dplyr::arrange(desc(total_publications)) |>  # Sort by no of publications
-  dplyr::top_n(10, total_publications)  # Top 10 authors
-
-# Plot top 10 authors
-ggplot(top_10_authors, aes(x = reorder(authors, total_publications), y = total_publications)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Top 10 Authors by Number of Publications", x = "Author", y = "Number of Publications")
-
 ```
 
 
 
-```{r}
-# Downloads Over Time
-library(ggplot2)
-library(lubridate)
-cran_all_pubs(cran_authors) |>
-  dplyr::mutate(last_update_date = lubridate::ymd_hms(last_update_date)) |>
-  dplyr::arrange(last_update_date) |>
-  ggplot(aes(x = last_update_date, y = downloads, group = 1)) + 
-  geom_line(color = "blue", size = 1) +
-  theme_minimal() +
-  labs(title = "Downloads Over Time", x = "Last Update Date", y = "Downloads")
-
-```
 
 
 
