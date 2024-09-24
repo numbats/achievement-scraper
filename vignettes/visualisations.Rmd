@@ -34,6 +34,33 @@ get_all_publications(orcid_gsid) |>
        x = "Author",
        y = "Number of Publications")
 ```
+The chart illustrates the top 5 most published authors from Monash EBS (Economic Business School) staff, with Yu Bai standing out as the most prolific author, significantly leading in publication count compared to others. Athanasios Pantelous follows as the second highest, while George Athanasopoulos and Dianne Cook contribute a moderate number of publications. Otavio Bartalotti completes the list with a relatively lower count. This suggests that Yu Bai is a highly active researcher, potentially leading in their field, while there is still substantial research activity among the other top authors. The marked difference in publication numbers indicates opportunities for increased collaboration and knowledge sharing among these authors to further enhance the school’s research output.
+
+
+#Publication Trend of Top Authors Over Time
+```{r}
+top_authors <- get_all_publications(orcid_gsid) |> 
+  filter(authors %in% author_names) |>  
+  group_by(authors) |>  
+  summarise(total_publications = n()) |>  
+  arrange(desc(total_publications)) |>  
+  slice_max(total_publications, n = 5) |> 
+  pull(authors)
+
+get_all_publications(orcid_gsid) |> 
+  filter(authors %in% top_authors) |>
+  group_by(authors, publication_year) |> 
+  summarise(total_publications = n()) |> 
+  ggplot(aes(x = as.numeric(publication_year), y = total_publications, color = authors)) +
+  geom_line(size = 1) +
+  theme_light() +
+  labs(title = "Publication Trend of Top Authors Over Time",
+       x = "Year",
+       y = "Number of Publications")
+
+```
+The publication trend over time for the top authors from Monash EBS shows distinct patterns in their research activity. Athanasios Pantelous had a remarkable peak around 2010, with over 40 publications, indicating a period of intense research output, but his activity declined sharply afterward. Yu Bai's publications began increasing steadily around 2010, eventually overtaking other authors in recent years, demonstrating consistent growth and suggesting an emerging or sustained research focus. George Athanasopoulos and Dianne Cook exhibited relatively stable but moderate publication rates, while Otavio Bartalotti maintained a lower yet steady output. This trend suggests that Yu Bai is currently the most active researcher, with Athanasios Pantelous having had a significant but more concentrated period of research impact in the past.
+
 
 # Publications by Year 
 ```{r}
@@ -45,6 +72,7 @@ get_all_publications(orcid_gsid) |>
   theme_light() +
   labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
 ```
+
 
 # Publications by Journal
 ```{r}
@@ -62,6 +90,8 @@ get_all_publications(orcid_gsid) |>
        x = "Journal",
        y = "Number of Publications")
 ```
+
+
 
 
 # Top Packages by Downloads 
@@ -100,6 +130,7 @@ cran_all_pubs(orcid_gsid) |>
        x = "Author",
        y = "Total Downloads")
 ```
+
 
 
 
