@@ -73,6 +73,8 @@ get_all_publications(orcid_gsid) |>
   labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
 ```
 
+The chart shows the overall trend in the number of publications over time across the Monash EBS department. The data shows a steady and gradual increase in publications up until the early 1990s, indicating relatively low research output during the initial years. However, from the mid-1990s onwards, there was a significant and consistent growth in the number of publications, with a sharp rise occurring around the mid-2000s to early 2010s, reaching a peak at over 300 publications. While there are some fluctuations post-2010, the general trend indicates that Monash EBS has seen substantial growth in its research output, possibly reflecting an increased emphasis on research, collaboration, and academic productivity in recent decades.
+
 
 # Publications by Journal
 ```{r}
@@ -91,7 +93,7 @@ get_all_publications(orcid_gsid) |>
        y = "Number of Publications")
 ```
 
-
+The bar chart shows the top 10 journals where Monash EBS staff publish the most. The "International Journal of Forecasting" is the top choice, with almost 200 publications, showing a strong focus on forecasting research. Next is the "Journal of Econometrics," indicating a key interest in econometric studies. Preprint platforms like "arXiv" and "SSRN" are also popular, showing that researchers often share their work openly. Other important journals include "Monash University" (likely representing internal publications) and more specialized ones like the "Journal of Computational and Graphical Statistics" and "Journal of Applied Econometrics." Overall, this chart shows that Monash EBS researchers are active in both forecasting and econometrics journals.
 
 
 # Top Packages by Downloads 
