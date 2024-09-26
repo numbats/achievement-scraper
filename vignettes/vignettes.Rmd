@@ -1,5 +1,5 @@
 ---
-title: "Vignettes"
+title: "Visualisations"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{visualisations}

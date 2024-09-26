@@ -1,0 +1,29 @@
+---
+title: "ACHIEVEMENT SCRAPER REPORT"
+author: "Parnika Khattri & Sherry Tee"
+date: "2024-09-26"
+output: html_document
+---
+
+# Abstract
+
+The achievement-scraper is an R package designed to streamline the extraction and analysis of academic outputs from ORCID profiles. It automates the retrieval of both publication and software output data, providing valuable insights for research departments and institutions. By utilizing ORCID's public API, the package simplifies the process of aggregating key metrics like total publications, top journals, and software downloads, making it a versatile tool for academic performance evaluation.
+
+# Introduction
+- Motivation
+- Objectives
+- Background
+
+# Package Design and Structure
+- Overview of Design
+- Core Functions
+- Directory Structure
+- Dependencies
+
+# Implementation
+# Example Usage
+# Documentation and User Guide
+# Future Work and Extensions 
+# Conclusion 
+# References
+# Appendix(if required)
