@@ -1,29 +1,53 @@
 ---
-title: "ACHIEVEMENT SCRAPER REPORT"
+title: "PUBLICATION-SCRAPER REPORT"
 author: "Parnika Khattri & Sherry Tee"
 date: "2024-09-26"
 output: html_document
 ---
 
-# Abstract
+# Abstract 
 
-The achievement-scraper is an R package designed to streamline the extraction and analysis of academic outputs from ORCID profiles. It automates the retrieval of both publication and software output data, providing valuable insights for research departments and institutions. By utilizing ORCID's public API, the package simplifies the process of aggregating key metrics like total publications, top journals, and software downloads, making it a versatile tool for academic performance evaluation.
+The publication-scraper is an R package designed to efficiently retrieve and analyse the academic outputs of researchers, with a particular focus on publications and software outputs. Tailored to meet the specific needs of the Monash EBS department, the package streamlines the process of collecting data for research evaluation and performance tracking. By utilising ORCID IDs, Google Scholar IDs and CRAN package information as inputs, publication-scraper automates the retrieval of publications, software downloads and other research contributions, providing users with a comprehensive and effective tool for academic analysis. The package is designed to support research administrators, faculty members and analysts in generating insights into academic productivity and impact.
 
 # Introduction
-- Motivation
-- Objectives
-- Background
 
-# Package Design and Structure
-- Overview of Design
-- Core Functions
-- Directory Structure
-- Dependencies
+-   **Background**
+
+Academic profiles have become essential for managing and showcasing scholarly work. ORCID (Open Researcher and Contributor ID) provides a unique identifier for researchers, linking them to their publications and research contributions. ORCID is widely used across institutions, making it an ideal data source for publication retrieval. Similarly, Google Scholar offers a profile for researchers that includes citation counts, h-index, and publication history, which are valuable metrics for evaluating academic performance.Beyond traditional publications, CRAN (The Comprehensive R Archive Network) plays a pivotal role in the open-source community by hosting R packages. Academic departments, especially those focused on computational research, need to track software outputs alongside publications. By incorporating CRAN download statistics, achievement-scraper allows users to evaluate software impact in the same way they analyze traditional publications. The package is tailored to the Monash EBS department’s needs but can be extended for broader applications in research institutions and universities globally.
+
+-   **Motivation**
+
+In academic environments, tracking research output is critical for evaluating individual and departmental performance. However, collecting this data particularly across large institutions, can be a time-consuming process. The publication-scraper package was created to address this challenge by automating the retrieval of academic outputs for faculty members using ORCID IDs and Google Scholar Ids. ORCID is widely adopted as a universal identifier for researchers, making it an ideal source for collecting publication and software data.
+
+-   **Goals & Objectives**
+
+The primary objective of publication-scraper is to provide users with an efficient tool for scraping, cleaning and visualizing data related to academic outputs. It allows researchers and administrators to:
+
+-   Retrieve all publications associated with an ORCID and SCHOLAR profile.
+-   Scrape software outputs on CRAN.
+-   Visualise key metrics such as the most prolific authors, most cited works and top-downloaded software.
+
+# Package Design and Structure 
+
+-   Overview of Design
+-   Core Functions
+-   Directory Structure
+-   Dependencies
+
+# Methodology
 
 # Implementation
+
 # Example Usage
+
 # Documentation and User Guide
-# Future Work and Extensions 
-# Conclusion 
+
+# Future Work and Extensions - Some sort of reflection on how successful you were and possible next steps
+
+# Result & Conclusion - A clear description of your contributions
+
 # References
+
 # Appendix(if required)
+
+-   Vignettes
