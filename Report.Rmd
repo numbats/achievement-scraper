@@ -30,8 +30,22 @@ The primary objective of publication-scraper is to provide users with an efficie
 # Package Design and Structure 
 
 -   Overview of Design
+The publication-scraper package is designed with a modular and flexible architecture, allowing staff in the EBS department to retrieve and analyze publication data efficiently. It is built using a combination of web scraping techniques, API integration, and data manipulation functions, ensuring that staff in the Monash EBS department can effortlessly extract data from ORCID, Google Scholar, and CRAN.
+
 -   Core Functions
+The core functions of the publication-scraper package are:
+
+- get_publications_from_orcid(): Retrieves all publications associated with a given ORCID ID, providing access to the author’s complete list of works.
+
+- get_publications_from_scholar(): Collects publication data from Google Scholar profiles using the Scholar ID, gathering valuable metrics such as citation counts and publication history.
+
+- cran_all_pubs(): Extracts download statistics for CRAN packages, allowing users to evaluate software impact.
+
+-get_all_publications(): Combines the results from ORCID, Google Scholar, and CRAN to provide a consolidated view of a researcher’s publications and software outputs.
+
 -   Directory Structure
+
+
 -   Dependencies
 
 # Methodology
@@ -39,6 +53,26 @@ The primary objective of publication-scraper is to provide users with an efficie
 # Implementation
 
 # Example Usage
+
+Here's an example demonstrating how to use the publication-scraper package:
+```{r}
+# Load the publication-scraper package
+library(publicationscraper)
+
+# Retrieve publications for a specific ORCID ID
+orcid_pubs <- get_publications_from_orcid("0000-0002-2140-5352")
+
+# Retrieve publications for a specific Google Scholar ID
+scholar_pubs <- get_publications_from_scholar("vamErfkAAAAJ")
+
+# Combine publications from both ORCID and Scholar
+all_pubs <- get_all_publications(data.frame(orcid_id = "0000-0002-2140-5352", scholar_id = "vamErfkAAAAJ"))
+
+# Retrieve CRAN package download statistics
+cran_data <- cran_all_pubs(data.frame(first_name = "Michael", last_name = "Hyndman"))
+
+```
+
 
 # Documentation and User Guide
 
