@@ -48,6 +48,15 @@ The core functions of the publication-scraper package are:
 
 -   Dependencies
 
+The publication-scraper package relies on several R packages to deliver its functionality:
+
+Data Manipulation and Cleaning: dplyr, tidyverse
+Web Scraping: rvest, xml2
+API Integration: rorcid, scholar
+Data Visualization: ggplot2
+Data Handling: tibble
+HTTP Requests: httr
+
 # Methodology
 
 # Implementation
