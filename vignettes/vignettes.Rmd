@@ -80,6 +80,7 @@ The chart shows the overall trend in the number of publications over time across
 ```{r}
 get_all_publications(orcid_gsid) |> 
   filter(!is.na(journal_name) & journal_name != "") |> 
+  filter(!journal_name %in% c("arXiv preprint arXiv:", "Available at SSRN", "Monash University")) |> 
   group_by(journal_name) |> 
   summarise(total_publications = n()) |> 
   arrange(desc(total_publications)) |> 
@@ -91,9 +92,10 @@ get_all_publications(orcid_gsid) |>
   labs(title = "Top 10 Journals by Number of Publications",
        x = "Journal",
        y = "Number of Publications")
+
 ```
 
-The bar chart shows the top 10 journals where Monash EBS staff publish the most. The "International Journal of Forecasting" is the top choice, with almost 200 publications, showing a strong focus on forecasting research. Next is the "Journal of Econometrics," indicating a key interest in econometric studies. Preprint platforms like "arXiv" and "SSRN" are also popular, showing that researchers often share their work openly. Other important journals include "Monash University" (likely representing internal publications) and more specialized ones like the "Journal of Computational and Graphical Statistics" and "Journal of Applied Econometrics." Overall, this chart shows that Monash EBS researchers are active in both forecasting and econometrics journals.
+The bar chart highlights the top 10 journals where Monash EBS staff frequently publish, with a strong focus on econometrics, forecasting, and statistical research. The "International Journal of Forecasting" leads in publication count, showcasing the department's emphasis on predictive analytics. The "Journal of Econometrics" follows, indicating a key interest in econometric studies. Other notable journals include the "Journal of Computational and Graphical Statistics" and "Journal of Applied Econometrics," reflecting contributions to statistical modeling and applied econometrics. The inclusion of journals like "Econometric Theory" and "European Journal of Operational Research" further illustrates a focus on both theoretical econometrics and operational research. Overall, the chart shows Monash EBS's substantial research output across these fields.
 
 
 # Top Packages by Downloads 
