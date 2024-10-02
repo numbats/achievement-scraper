@@ -59,6 +59,16 @@ HTTP Requests: httr
 
 # Methodology
 
+The publication-scraper package employs a systematic approach to gather, clean, and analyze publication data:
+
+Data Retrieval: Uses the rorcid and scholar packages to extract data from ORCID and Google Scholar. CRAN package data is collected using the pkgsearch package.
+
+Data Cleaning: Applies dplyr functions to filter, clean, and standardize the data, ensuring accuracy and consistency.
+
+Data Integration: Combines data from ORCID, Google Scholar, and CRAN to create a unified dataset, providing a comprehensive view of research outputs.
+
+Data Visualization: Utilizes ggplot2 to create visual representations of the data, enabling insightful analysis of publication trends, author contributions, and software downloads.
+
 # Implementation
 
 # Example Usage
