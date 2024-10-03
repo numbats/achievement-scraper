@@ -80,7 +80,7 @@ The chart shows the overall trend in the number of publications over time across
 ```{r}
 get_all_publications(orcid_gsid) |> 
   filter(!is.na(journal_name) & journal_name != "") |> 
-  filter(!journal_name %in% c("arXiv preprint arXiv:", "Available at SSRN", "Monash University")) |> 
+  filter(!journal_name %in% c("arXiv preprint arXiv:", "Available at SSRN", "Monash University", "Monash Econometrics and Business Statistics Working Papers")) |> 
   group_by(journal_name) |> 
   summarise(total_publications = n()) |> 
   arrange(desc(total_publications)) |> 
