@@ -117,25 +117,7 @@ cran_all_pubs(orcid_gsid) |>
 
 The bar chart shows the most downloaded R packages used by Monash EBS researchers, with "fracdiff" being the most popular by far. This suggests that many researchers rely on it for time series analysis, especially for fractional differencing. The next most common packages, "tsfeatures" and "fpp2," also point to a strong focus on time series forecasting and data features. Other packages like "rainbow," "hdrcde," "tsibbledata," and "fma" are also frequently used, showing they’re important for various data analysis tasks. The less downloaded packages, "Mcomp," "thief," and "demography," might be used for more specific or niche purposes. Overall, the chart highlights that time series analysis is a key area of interest for these researchers, which aligns well with advanced analytics and forecasting studies.
 
-# Top Authors by Downloads
 
-```{r}
-# loop the authors
-# only monash authors
-
-cran_all_pubs(orcid_gsid) |> 
-  group_by(authors) |> 
-  summarise(total_downloads = sum(downloads, na.rm = TRUE)) |> 
-  arrange(desc(total_downloads)) |> 
-  slice_max(total_downloads, n = 10) |> 
-  ggplot(aes(x = reorder(authors, total_downloads), y = total_downloads)) +
-  geom_bar(stat = "identity", fill = "orange") +
-  coord_flip() +
-  theme_light() +
-  labs(title = "Top 10 Authors by Package Downloads",
-       x = "Author",
-       y = "Total Downloads")
-```
 
 
 
