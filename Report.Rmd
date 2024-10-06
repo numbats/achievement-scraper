@@ -45,6 +45,30 @@ The core functions of the publication-scraper package are:
 
 -   Directory Structure
 
+R/: Contains R scripts with functions to retrieve and process publication data.
+combine.R: Functions to fetch and combine publication data from ORCID and Google Scholar.
+
+separate.R: Functions to fetch data separately from ORCID and Google Scholar.
+utils.R: Utility functions to search for CRAN package download statistics.
+data/: Contains datasets.
+
+orcid_gsid.rda: This dataset includes ORCID and Google Scholar IDs manually gathered from Monash EBS researchers.
+
+data-raw/: Scripts for preparing and cleaning raw datasets, used to generate orcid_gsid.rda.
+
+inst/vignettes/: Holds the vignette explaining the package's functionalities and visualizations, offering examples on how to analyze top authors, publication trends, and software downloads.
+
+vignettes/: Contains the same vignette in markdown format for ease of accessibility and understanding.
+
+man/: Contains documentation files for each R script and dataset in the package.
+
+tests/: Contains unit tests to ensure the correct functioning of the package.
+DESCRIPTION & NAMESPACE: These define package metadata (version, dependencies, etc.) and exported functions.
+
+README.md: Provides a general overview of the package and guides users on installation and basic usage.
+
+Report.Rmd: The detailed report of the project, including goals, objectives, and methodology.
+
 
 -   Dependencies
 
@@ -97,7 +121,29 @@ cran_data <- cran_all_pubs(data.frame(first_name = "Michael", last_name = "Hyndm
 
 # Future Work and Extensions - Some sort of reflection on how successful you were and possible next steps
 
+The publication-scraper package has successfully streamlined the process of retrieving and analyzing academic outputs from ORCID, Google Scholar, and CRAN, offering a comprehensive tool for tracking research productivity at Monash EBS. However, there are several potential extensions to enhance its functionality:
+
+-Improved Data Cleaning: While the package effectively retrieves publication data, there are instances of missing or incomplete author information. Future iterations could include more robust cleaning functions to handle missing data more effectively, possibly utilizing external databases to fill in gaps.
+
+- Automation of Dataset Updates: Automating the updating of ORCID and Google Scholar IDs would further streamline the process and ensure the dataset remains up-to-date without manual intervention.
+
+- Cross-Institutional Comparison: Expanding the package to handle data from multiple institutions could make it possible to perform benchmarking and cross-institutional comparisons. This would be especially useful for academic departments wanting to compare their performance with peer institutions, fostering a competitive research environment.
+
+- Interactive Dashboards: Developing an interactive dashboard using R packages like Shiny would provide a more dynamic user experience. Users could filter data, explore trends, and generate custom reports in real-time, making the analysis process more intuitive and accessible, especially for non-technical users like administrators.
+
+
 # Result & Conclusion - A clear description of your contributions
+The publication-scraper project was structured to ensure a clear and balanced division of work between Parnika and Sherry, with valuable guidance from our hosts Michael and Rob, who provided support in our guidance of work and resolving bugs throughout the project. On the other hand, David played a pivotal role in providing mental support throughout the project, consistently checking in on progress and offering valuable tips on improving the final report writing. 
+
+The work began by preparing the dataset, a crucial component of the package. Parnika manually inputted the ORCID IDs of Monash EBS staff, while Sherry handled the task of inputting the corresponding Google Scholar IDs.
+
+Sherry developed the core functions of the package, such as get_publications_from_orcid(), get_publications_from_scholar(), and get_all_publications(), which retrieve and combine publication data from ORCID, Google Scholar, and CRAN. Parnika provided examples that demonstrated how these functions can be applied, ensuring that the package is user-friendly.
+
+Both Parnika and Sherry collaborated on creating the vignettes, offering practical insights and visualizations on top authors, publication trends, and software downloads. Parnika took responsibility for writing and executing the unit tests to ensure the functions performed correctly and contributed significantly to the documentation. Sherry finalized the project by writing the README file, which provides an overview of the package, along with installation and usage instructions.
+
+Throughout the project, Michael and Rob provided critical guidance, particularly in addressing technical issues and ensuring the package's functionality.David's continuous encouragement and input on improving the report further enhanced the quality of the final deliverable. Their input greatly contributed to the project’s success.
+
+The work was evenly distributed, with each team member contributing to different components of the project. Through collaboration and the support of their hosts, Parnika and Sherry successfully created a robust and functional tool for analyzing academic outputs at Monash EBS. The publication-scraper stands as a solid foundation for future development and extensions.
 
 # References
 
