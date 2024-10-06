@@ -131,6 +131,8 @@ install.packages(c("pkgsearch", "tibble", "dplyr", "stringr", "scholar", "rorcid
 
 
 ## License
+MIT License
 
 ## References
+
 
