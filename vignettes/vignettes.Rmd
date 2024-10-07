@@ -1,13 +1,28 @@
 ---
 title: "Vignettes"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true     
+    toc_depth: 1
 vignette: >
   %\VignetteIndexEntry{visualisations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r loading libraries, warning=FALSE, message=FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE, 
+  message = FALSE, 
+  fig.width =8, 
+  fig.height=5,
+  fig.align = "center",
+  out.width = "100%",
+  dpi =300)
+```
+
+```{r loading libraries}
 library(publicationsscraper)
 library(ggplot2)
 library(dplyr)
@@ -15,7 +30,8 @@ library(dplyr)
 
 
 # Top Authors by Publications
-```{r, warning=FALSE}
+
+```{r}
 author_names <- paste(orcid_gsid$first_name, orcid_gsid$last_name)
 get_all_publications(orcid_gsid) |> 
   filter(authors %in% author_names) |>  
@@ -24,20 +40,23 @@ get_all_publications(orcid_gsid) |>
   arrange(desc(total_publications)) |>  
   slice_max(total_publications, n = 5) |>  
   ggplot(aes(x = reorder(authors, total_publications), 
-             y = total_publications, 
-             fill = ifelse(authors == first(authors), "highlight", "normal"))) + 
-  geom_bar(stat = "identity") +
+             y = total_publications)) + 
+  geom_bar(stat = "identity", fill = "blue") +
   coord_flip() +
-  scale_fill_manual(values = c("highlight" = "red", "normal" = "green"), guide = FALSE) +  
-  theme_light() +
+  theme_bw() +
   labs(title = "Top 5 Authors by Number of Publications",
        x = "Author",
-       y = "Number of Publications")
+       y = "Number of Publications") +
+theme(plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12))
 ```
-The chart illustrates the top 5 most published authors from Monash EBS (Economic Business School) staff, with Yu Bai standing out as the most prolific author, significantly leading in publication count compared to others. Athanasios Pantelous follows as the second highest, while George Athanasopoulos and Dianne Cook contribute a moderate number of publications. Otavio Bartalotti completes the list with a relatively lower count. This suggests that Yu Bai is a highly active researcher, potentially leading in their field, while there is still substantial research activity among the other top authors. The marked difference in publication numbers indicates opportunities for increased collaboration and knowledge sharing among these authors to further enhance the school’s research output.
+
+## **Analysis**
+
+The bar chart illustrates the top five authors based on the number of their publications of Monash EBS Department. Athanasios Pantelous stands out as the most prolific author, with over 150 publications, indicating a significant contribution to the academic field. Rob J Hyndman follows, with slightly more than 100 publications, highlighting his extensive work, particularly in time series forecasting and statistical analysis. Close behind Hyndman is George Athanasopoulos, whose publication count also reflects substantial research activity. Dianne Cook comes next, contributing a notable number of publications, although slightly fewer than Athanasopoulos. Lastly, Otavio Bartalotti, while still among the top five, has a comparatively smaller number of publications. The chart reveals a notable gap between Pantelous and the rest, suggesting his particularly high productivity, while Hyndman, Athanasopoulos, and Cook are closely aligned in their output, with Bartalotti trailing behind.
 
 
-#Publication Trend of Top Authors Over Time
+# Publication Trend of Top Authors Over Time
 ```{r}
 top_authors <- get_all_publications(orcid_gsid) |> 
   filter(authors %in% author_names) |>  
@@ -53,13 +72,17 @@ get_all_publications(orcid_gsid) |>
   summarise(total_publications = n()) |> 
   ggplot(aes(x = as.numeric(publication_year), y = total_publications, color = authors)) +
   geom_line(size = 1) +
-  theme_light() +
+   theme_bw() +
   labs(title = "Publication Trend of Top Authors Over Time",
        x = "Year",
-       y = "Number of Publications")
-
+       y = "Number of Publications") +
+theme(plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12))
 ```
-The publication trend over time for the top authors from Monash EBS shows distinct patterns in their research activity. Athanasios Pantelous had a remarkable peak around 2010, with over 40 publications, indicating a period of intense research output, but his activity declined sharply afterward. Yu Bai's publications began increasing steadily around 2010, eventually overtaking other authors in recent years, demonstrating consistent growth and suggesting an emerging or sustained research focus. George Athanasopoulos and Dianne Cook exhibited relatively stable but moderate publication rates, while Otavio Bartalotti maintained a lower yet steady output. This trend suggests that Yu Bai is currently the most active researcher, with Athanasios Pantelous having had a significant but more concentrated period of research impact in the past.
+
+## **Analysis**
+
+The line graph shows the publication trends of the top five authors over time of Monash EBS Department. Athanasios Pantelous exhibits a sharp spike around 2010, where his publication count dramatically rises to over 40 in a single year, indicating a highly productive period. After this peak, his publication rate steadily declines but remains relatively active. Rob J Hyndman and George Athanasopoulos show a more consistent publication pattern over the years, with both experiencing several minor peaks around the same period, suggesting ongoing collaboration or similar research timelines. Dianne Cook demonstrates a moderate level of publication activity with a peak around the late 2000s but lower and more stable publication counts in recent years. Otavio Bartalotti maintains a relatively steady but lower publication output throughout the timeline. Overall, the graph highlights Pantelous' distinct peak in productivity, while Hyndman and Athanasopoulos maintain more consistent output over time, with the other authors showing more moderate and stable publication rates.
 
 
 # Publications by Year 
@@ -69,9 +92,13 @@ get_all_publications(orcid_gsid) |>
   dplyr::count(publication_year) |>
   ggplot(aes(x = as.numeric(publication_year), y = n)) +  
   geom_line(color= "red") +
-  theme_light() +
-  labs(title = "Publications Over Time", x = "Year", y = "Number of Publications")
+   theme_bw() +
+  labs(title = "Publications Over Time", x = "Year", y = "Number of Publications") +
+theme(plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12))
 ```
+
+## **Analysis** 
 
 The chart shows the overall trend in the number of publications over time across the Monash EBS department. The data shows a steady and gradual increase in publications up until the early 1990s, indicating relatively low research output during the initial years. However, from the mid-1990s onwards, there was a significant and consistent growth in the number of publications, with a sharp rise occurring around the mid-2000s to early 2010s, reaching a peak at over 300 publications. While there are some fluctuations post-2010, the general trend indicates that Monash EBS has seen substantial growth in its research output, possibly reflecting an increased emphasis on research, collaboration, and academic productivity in recent decades.
 
@@ -88,12 +115,15 @@ get_all_publications(orcid_gsid) |>
   ggplot(aes(x = reorder(journal_name, total_publications), y = total_publications))  +
   geom_bar(stat = "identity", fill = "lightskyblue4") +
   coord_flip() +
-  theme_light() +
+   theme_bw() +
   labs(title = "Top 10 Journals by Number of Publications",
        x = "Journal",
-       y = "Number of Publications")
-
+       y = "Number of Publications") +
+theme(plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12))
 ```
+
+## **Analysis**
 
 The bar chart highlights the top 10 journals where Monash EBS staff frequently publish, with a strong focus on econometrics, forecasting, and statistical research. The "International Journal of Forecasting" leads in publication count, showcasing the department's emphasis on predictive analytics. The "Journal of Econometrics" follows, indicating a key interest in econometric studies. Other notable journals include the "Journal of Computational and Graphical Statistics" and "Journal of Applied Econometrics," reflecting contributions to statistical modeling and applied econometrics. The inclusion of journals like "Econometric Theory" and "European Journal of Operational Research" further illustrates a focus on both theoretical econometrics and operational research. Overall, the chart shows Monash EBS's substantial research output across these fields.
 
@@ -108,12 +138,16 @@ cran_all_pubs(orcid_gsid) |>
              fill = ifelse(name == first(name), "highlight", "normal"))) +  
   geom_bar(stat = "identity") + 
   scale_fill_manual(values = c("highlight" = "blue", "normal" = "gold"), guide = FALSE) +  
-  theme_light() + 
   coord_flip() + 
+   theme_bw() +
   labs(title = "Top 10 Packages by Downloads", 
        x = "Package Name", 
-       y = "Downloads")
+       y = "Downloads") +
+theme(plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12))
 ```
+
+## **Analysis**
 
 The bar chart shows the most downloaded R packages used by Monash EBS researchers, with "fracdiff" being the most popular by far. This suggests that many researchers rely on it for time series analysis, especially for fractional differencing. The next most common packages, "tsfeatures" and "fpp2," also point to a strong focus on time series forecasting and data features. Other packages like "rainbow," "hdrcde," "tsibbledata," and "fma" are also frequently used, showing they’re important for various data analysis tasks. The less downloaded packages, "Mcomp," "thief," and "demography," might be used for more specific or niche purposes. Overall, the chart highlights that time series analysis is a key area of interest for these researchers, which aligns well with advanced analytics and forecasting studies.
 
