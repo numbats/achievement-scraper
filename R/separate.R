@@ -191,4 +191,59 @@ find_cran_packages <- function(first_name, last_name) {
   unique(package_frame)
 }
 
+#' get_publications
+#'
+#' @description
+#' This function retrieves research publications from Google Scholar and ORCID based on the provided IDs.
+
+#' @param orcid_id ORCID ID
+#' @param scholar_id Google Scholar ID
+#'
+#' #' @return A dataframe containing research outputs containing title, DOI, authors, publications, journal name.
+#'
+#' @examples
+#' # Example 1: Retrieve publications from both ORCID and Google Scholar
+#' \dontrun{get_publications("0000-0002-2140-5352", "vamErfkAAAAJ")}
+#'
+#  # Example 2: Retrieve publications only from Google Scholar
+#' \dontrun{get_publications(NA, "vamErfkAAAAJ")}
+#'
+#' # Example 3: Retrieve publications only from ORCID
+#' \dontrun{get_publications("0000-0002-2140-5352", NA)}
+#'
+#' @name get_publications
+#' @export
+get_publications <- function(orcid_id, scholar_id) {
+  if (is.na(scholar_id)) {
+    scholar_pubs <- NULL
+  } else {
+    scholar_pubs <- get_publications_from_scholar(scholar_id)
+  }
+
+  if (is.na(orcid_id)) {
+    orcid_pubs <- NULL
+  } else {
+    orcid_pubs <- get_publications_from_orcid(orcid_id)
+  }
+
+  all_pubs <- dplyr::bind_rows(scholar_pubs, orcid_pubs) |>
+    dplyr::distinct()
+
+  required_cols <- c("title", "DOI", "authors", "publication_year", "journal_name")
+  missing_cols <- setdiff(required_cols, colnames(all_pubs))
+
+  if (length(missing_cols) > 0) {
+    for (col in missing_cols) {
+      all_pubs[[col]] <- NA
+    }
+  }
+
+  research_df <- all_pubs |>
+    dplyr::filter(!is.na(journal_name)) |>
+    dplyr::select(title, DOI, authors, publication_year, journal_name)
+
+  return(tibble::as_tibble(research_df))
+}
+
+
 

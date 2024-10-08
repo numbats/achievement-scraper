@@ -23,7 +23,7 @@ We are grateful for the guidance and support provided by our supervisors, Rob J 
 
 \newpage
 
-# Abstract
+# ABSTRACT
 
 This project focuses on analyzing and automating the retrieval of academic outputs using Publication-Scraper, an R package developed to streamline research evaluation. Academic contributions, whether in the form of publications or software outputs, play a critical role in shaping the productivity and impact of researchers. This package leverages ORCID IDs, Google Scholar profiles and CRAN (Comprehensive R Archive Network) data to automate the collection of academic outputs for researchers within the Monash EBS department.
 
@@ -37,7 +37,7 @@ Overall, Publication-Scraper not only automates data collection but also provide
 
 \newpage
 
-# Introduction
+# INTRODUCTION
 
 In today’s data-driven academic landscape, managing and presenting scholarly outputs has become a critical task for both individual researchers and institutions. In this context, ORCID (Open Researcher and Contributor ID) has emerged as a key platform that provides unique identifiers, linking researchers to their academic contributions. Widely adopted across universities and research institutions, ORCID facilitates efficient retrieval of publication data. Alongside ORCID, Google Scholar profiles offer valuable metrics such as citation counts, h-index and publication history, further enabling comprehensive evaluation of academic performance. However, traditional publication tracking must now be complemented by monitoring software outputs, particularly in computational research domains. The Comprehensive R Archive Network (CRAN) serves as a central repository for R packages, making it an essential data source for assessing the impact of software contributions.
 
@@ -47,7 +47,7 @@ The primary goal of Publication-Scraper is to offer an integrated solution for s
 
 \newpage
 
-# Data
+# DATA
 
 The primary dataset used in this project is the manually compiled `orcid_gsid` dataset, which contains information on Monash EBS staff and their respective ORCID and Google Scholar IDs. This dataset was developed by visiting the Monash University staff directory and collecting relevant academic identifiers for each researcher. Where available, the ORCID and Google Scholar IDs were added to the dataset, though some researchers do not have profiles on these platforms, resulting in missing entries.
 
@@ -64,97 +64,47 @@ The data was manually collected and stored in CSV format. Although some missing 
 
 \newpage
 
-# Methodology
+# METHODOLOGY
 
-In this project, we manually compiled a dataset of Monash EBS staff, including their ORCID and Google Scholar IDs, by visiting the Monash staff directory. Using this data, we developed the *Publication-Scraper* package to automate the retrieval of research outputs across ORCID, Google Scholar, and CRAN. We utilized the ORCID API, Google Scholar profiles, and CRAN package download statistics to extract academic outputs and associated metrics. The package was designed to support efficient research evaluation and performance tracking.
+The Publication-Scraper package was designed to streamline the collection and analysis of research outputs for Monash EBS researchers by automating the consolidation of data from ORCID, Google Scholar, and CRAN. This reduces the manual effort involved in evaluating academic contributions. We first identified staff names using the Monash staff directory, then gathered ORCID and Google Scholar IDs from the respective websites, creating a dataset that serves as the foundation for retrieving academic outputs.
 
-The following steps were carried out as part of the methodological process:
+A public API was built to automate the retrieval of publication data from ORCID, extracting key details such as titles, authors, and DOIs. Similarly, Google Scholar data was collected to capture essential publication metrics. For researchers contributing software, CRAN download statistics were also obtained, providing insight into the impact of their software contributions.
 
--   **Dataset Compilation**: We manually created the `orcid_gsid` dataset containing the names, ORCID IDs, and Google Scholar IDs for Monash EBS researchers. This dataset serves as the base for linking academic profiles across platforms.
--   **ORCID Data Extraction**: Using the `rorcid` package, we retrieved all publications linked to each researcher’s ORCID ID, capturing details such as publication titles, dates, and DOIs.
--   **Google Scholar Data Retrieval**: We collected publication data from Google Scholar profiles using the `scholar` package. This process included extracting citation counts, h-index, and individual publication metrics for each researcher.
--   **CRAN Software Output Analysis**: For researchers with contributions on CRAN, we obtained the download statistics of their R packages using the `pkgsearch` package. This data helped quantify software impact.
--   **Combining Data**: We integrated the publication and software data to create a unified dataset of academic outputs, providing a comprehensive view of each researcher’s contributions.
--   **Exploratory Data Analysis**: Several analyses were conducted to visualize key metrics and explore academic performance patterns:
-    -   We identified the **top five most prolific authors** in the Monash EBS department.
-    -   We explored the **publication trends** of these top authors over time, highlighting key periods of productivity.
-    -   We analyzed the **distribution of publications by year** to observe research activity trends within the department.
-    -   We visualized the **most frequently used journals** by Monash EBS staff to identify key areas of focus.
-    -   We examined the **top R packages by download volume** to understand software impact and usage patterns.
-
-Through these steps, the *Publication-Scraper* package offers a detailed view of academic productivity, enabling research administrators and analysts to efficiently track and evaluate research outputs.
+The core functions of the Publication-Scraper package, `get_all_publications()` and `cran_all_pubs()`, compile the final set of publications and software outputs for each researcher, offering a comprehensive view of their scholarly work. Supporting functions in `separate.R` handle the retrieval and processing of individual outputs from ORCID and Google Scholar, ensuring accurate data extraction. The results are then merged by the functions in `combine.R`, creating a complete academic profile for each researcher.
 
 \newpage
 
-# Package Design and Structure
+## Example Usage
 
--   Overview of Design The publication-scraper package is designed with a modular and flexible architecture, allowing staff in the EBS department to retrieve and analyze publication data efficiently. It is built using a combination of web scraping techniques, API integration, and data manipulation functions, ensuring that staff in the Monash EBS department can effortlessly extract data from ORCID, Google Scholar, and CRAN.
+### get_all_publications()
 
--   Core Functions The core functions of the publication-scraper package are:
+It is the core function that retrieves and combines all publication data from both ORCID and Google Scholar profiles providing a unified view of a researcher’s academic outputs. For example, to retrieve publications for the first three researchers:
 
--   get_publications_from_orcid(): Retrieves all publications associated with a given ORCID ID, providing access to the author’s complete list of works.
-
--   get_publications_from_scholar(): Collects publication data from Google Scholar profiles using the Scholar ID, gathering valuable metrics such as citation counts and publication history.
-
--   cran_all_pubs(): Extracts download statistics for CRAN packages, allowing users to evaluate software impact.
-
--get_all_publications(): Combines the results from ORCID, Google Scholar, and CRAN to provide a consolidated view of a researcher’s publications and software outputs.
-
--   Directory Structure
-
-R/: Contains R scripts with functions to retrieve and process publication data. combine.R: Functions to fetch and combine publication data from ORCID and Google Scholar.
-
-separate.R: Functions to fetch data separately from ORCID and Google Scholar. utils.R: Utility functions to search for CRAN package download statistics. data/: Contains datasets.
-
-orcid_gsid.rda: This dataset includes ORCID and Google Scholar IDs manually gathered from Monash EBS researchers.
-
-data-raw/: Scripts for preparing and cleaning raw datasets, used to generate orcid_gsid.rda.
-
-inst/vignettes/: Holds the vignette explaining the package's functionalities and visualizations, offering examples on how to analyze top authors, publication trends, and software downloads.
-
-vignettes/: Contains the same vignette in markdown format for ease of accessibility and understanding.
-
-man/: Contains documentation files for each R script and dataset in the package.
-
-tests/: Contains unit tests to ensure the correct functioning of the package. DESCRIPTION & NAMESPACE: These define package metadata (version, dependencies, etc.) and exported functions.
-
-README.md: Provides a general overview of the package and guides users on installation and basic usage.
-
-Report.Rmd: The detailed report of the project, including goals, objectives, and methodology.
-
--   Dependencies
-
-The publication-scraper package relies on several R packages to deliver its functionality:
-
-Data Manipulation and Cleaning: dplyr, tidyverse Web Scraping: rvest, xml2 API Integration: rorcid, scholar Data Visualization: ggplot2 Data Handling: tibble HTTP Requests: httr
-
-# Implementation
-
-# Example Usage
-
-Here's an example demonstrating how to use the publication-scraper package:
-
-```{r, echo=FALSE, eval=FALSE}
-# Load the publication-scraper package
-library(publicationscraper)
-
-# Retrieve publications for a specific ORCID ID
-orcid_pubs <- get_publications_from_orcid("0000-0002-2140-5352")
-
-# Retrieve publications for a specific Google Scholar ID
-scholar_pubs <- get_publications_from_scholar("vamErfkAAAAJ")
-
-# Combine publications from both ORCID and Scholar
-all_pubs <- get_all_publications(data.frame(orcid_id = "0000-0002-2140-5352", scholar_id = "vamErfkAAAAJ"))
-
-# Retrieve CRAN package download statistics
-cran_data <- cran_all_pubs(data.frame(first_name = "Michael", last_name = "Hyndman"))
-
+```{r, eval=FALSE}
+get_all_publications(orcid_gsid[1:3, ])
 ```
 
-# Documentation and User Guide
+![Sample output from get_all_publications()](figs/figure_1.png) 
 
-# Result & Conclusion - A clear description of your contributions
+![Additional output from get_all_publications()](figs/figure_2.png)
+
+\newpage
+
+### cran_all_pubs()
+
+This function compiles download statistics for CRAN packages authored by researchers. It retrieves the number of downloads for each package, providing insights into the impact of software contributions. By summarizing the software outputs and their download counts, this function enables users to assess a researcher’s influence within the open-source community. For insistance, to retrieve CRAN downloads for of the researchers:
+
+```{r, eval=FALSE}
+cran_all_pubs(orcid_gsid[1:15, ])
+```
+
+![CRAN download statistics from cran_all_pubs()](figs/figure_3.png)
+
+![Additional CRAN download statistics from cran_all_pubs()](figs/figure_4.png)
+
+\newpage
+
+# Result & Conclusion 
 
 The publication-scraper project was structured to ensure a clear and balanced division of work between Parnika and Sherry, with valuable guidance from our hosts Michael and Rob, who provided support in our guidance of work and resolving bugs throughout the project. On the other hand, David played a pivotal role in providing mental support throughout the project, consistently checking in on progress and offering valuable tips on improving the final report writing.
 
@@ -168,7 +118,9 @@ Throughout the project, Michael and Rob provided critical guidance, particularly
 
 The work was evenly distributed, with each team member contributing to different components of the project. Through collaboration and the support of their hosts, Parnika and Sherry successfully created a robust and functional tool for analyzing academic outputs at Monash EBS. The publication-scraper stands as a solid foundation for future development and extensions.
 
-# Future Work and Extensions - Some sort of reflection on how successful you were and possible next steps
+\newpage
+
+# Future Work and Extensions
 
 The publication-scraper package has successfully streamlined the process of retrieving and analyzing academic outputs from ORCID, Google Scholar, and CRAN, offering a comprehensive tool for tracking research productivity at Monash EBS. However, there are several potential extensions to enhance its functionality:
 
@@ -180,6 +132,8 @@ The publication-scraper package has successfully streamlined the process of retr
 
 -   Interactive Dashboards: Developing an interactive dashboard using R packages like Shiny would provide a more dynamic user experience. Users could filter data, explore trends, and generate custom reports in real-time, making the analysis process more intuitive and accessible, especially for non-technical users like administrators.
 
+\newpage
+
 # References
 
-# Appendix(if required)
+
