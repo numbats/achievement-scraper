@@ -1,19 +1,19 @@
 ---
 title: "PUBLICATION-SCRAPER REPORT"
-author: "Parnika Khattri & Sherry Tee"
+author: "Parnika Khattri AND Sherry Tee"
 date: "2024-09-26"
 output:
-  html_document:
+  pdf_document:
     toc: true
     toc_depth: 1
-    css: styles.css
     number_sections: true
-    theme: flatly
-    highlight: tango
-    fig_caption: true
+  header-includes:
+  - \usepackage{lmodern}
 ---
 
-# Preface
+\newpage
+
+# PREFACE
 
 As an R user, have you ever wondered how efficiently academic outputs can be tracked and analyzed across various platforms? What if there was a way to automate the retrieval of publications and software outputs, reducing the time and effort researchers and administrators spend gathering this data? These are the questions that drove the development of Publication-Scraper. This R package enables users to collect and analyze research outputs, providing a more efficient approach to academic performance tracking.
 
@@ -21,7 +21,7 @@ This report is written as part of the ETC5543 research project, supervised by Ro
 
 We are grateful for the guidance and support provided by our supervisors, Rob J Hyndman and Michael Lydeamore and our mentor, David Frazier, whose feedback and encouragement were essential to the success of this project. We hope this report offers valuable insights into the creation and application of Publication-Scraper and highlights its potential to streamline research output analysis for academic institutions.
 
-------------------------------------------------------------------------
+\newpage
 
 # Abstract
 
@@ -35,7 +35,7 @@ Overall, Publication-Scraper not only automates data collection but also provide
 
 [KEY WORDS]{.underline}: Academic output analysis, ORCID, Google Scholar, CRAN downloads, R package, Web scraping
 
-------------------------------------------------------------------------
+\newpage
 
 # Introduction
 
@@ -45,7 +45,7 @@ Motivated by the growing need to streamline academic performance evaluation, thi
 
 The primary goal of Publication-Scraper is to offer an integrated solution for scraping, cleaning, and visualizing academic output data. The package enables users to retrieve all publications associated with ORCID and Google Scholar profiles, as well as scrape CRAN download statistics to assess software impact. Key metrics, such as the most prolific authors, the most cited works and the top-downloaded software, are visualized to provide insights into academic productivity and influence. Although designed specifically for the Monash EBS department, Publication-Scraper can be adapted for broader use in research institutions worldwide, ensuring scalability and relevance across different academic contexts.
 
-------------------------------------------------------------------------
+\newpage
 
 # Data
 
@@ -55,14 +55,14 @@ The dataset is structured as follows, with the following variables included:
 
 -   `first_name`: The first name of the individual.
 -   `last_name`: The last name of the individual.
--   `orcid_id`: The ORCID identifier, which links researchers to their publication records. For some individuals, this field may be blank if no ORCID profile was found.
--   `gsuser_id`: The Google Scholar user ID, which provides access to publication records and citation metrics. As with ORCID, some researchers may not have a Google Scholar profile, and this field will be blank for those cases.
+-   `orcid_id`:The ORCID identifier, linking researchers to their publication records.
+-   `gsuser_id`: The unique identifier for the researcher’s Google Scholar profile.
 
-This dataset serves as the foundation for the *Publication-Scraper* package. It allows the package to automate the retrieval of publications and software outputs by mapping researchers to their online academic profiles across ORCID, Google Scholar, and CRAN.
+This dataset serves as the foundation for the *Publication-Scraper* package. It allows the package to automate the retrieval of publications and software outputs by mapping researchers to their online academic profiles across ORCID, Google Scholar and CRAN.
 
 The data was manually collected and stored in CSV format. Although some missing values exist due to the unavailability of profiles for certain researchers, the dataset provides a comprehensive tool for tracking the academic contributions of Monash EBS staff. This single dataset integrates easily into the package’s functions, ensuring efficient data retrieval and analysis for research evaluation purposes.
 
-------------------------------------------------------------------------
+\newpage
 
 # Methodology
 
@@ -84,7 +84,7 @@ The following steps were carried out as part of the methodological process:
 
 Through these steps, the *Publication-Scraper* package offers a detailed view of academic productivity, enabling research administrators and analysts to efficiently track and evaluate research outputs.
 
-------------------------------------------------------------------------
+\newpage
 
 # Package Design and Structure
 
