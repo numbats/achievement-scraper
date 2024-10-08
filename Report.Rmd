@@ -74,7 +74,7 @@ The core functions of the Publication-Scraper package, `get_all_publications()` 
 
 \newpage
 
-## Example Usage
+## EXAMPLE USAGE
 
 ### get_all_publications()
 
@@ -120,17 +120,25 @@ The work was evenly distributed, with each team member contributing to different
 
 \newpage
 
-# Future Work and Extensions
+# FUTURE SCOPE
 
-The publication-scraper package has successfully streamlined the process of retrieving and analyzing academic outputs from ORCID, Google Scholar, and CRAN, offering a comprehensive tool for tracking research productivity at Monash EBS. However, there are several potential extensions to enhance its functionality:
+The `publication-scraper` package has successfully streamlined the process of retrieving and analyzing academic outputs from ORCID, Google Scholar and CRAN, offering a comprehensive tool for tracking research productivity at Monash EBS. However, several potential extensions could further enhance its functionality:
 
--Improved Data Cleaning: While the package effectively retrieves publication data, there are instances of missing or incomplete author information. Future iterations could include more robust cleaning functions to handle missing data more effectively, possibly utilizing external databases to fill in gaps.
+## Incorporating Detailed Research Metrics and Rankings 
 
--   Automation of Dataset Updates: Automating the updating of ORCID and Google Scholar IDs would further streamline the process and ensure the dataset remains up-to-date without manual intervention.
+A key enhancement would be to introduce features that track and present essential academic metrics, including:
 
--   Cross-Institutional Comparison: Expanding the package to handle data from multiple institutions could make it possible to perform benchmarking and cross-institutional comparisons. This would be especially useful for academic departments wanting to compare their performance with peer institutions, fostering a competitive research environment.
+- Direct links to publications.
+- Ranking articles by their respective journal rankings.
+- Providing each staff member’s h-index, total citations, and top 10 most cited outputs.
 
--   Interactive Dashboards: Developing an interactive dashboard using R packages like Shiny would provide a more dynamic user experience. Users could filter data, explore trends, and generate custom reports in real-time, making the analysis process more intuitive and accessible, especially for non-technical users like administrators.
+## Interactive Dashboards
+
+Developing an interactive dashboard using R packages like Shiny would provide a more dynamic user experience. Users could filter data, explore trends, and generate custom reports in real-time, making the analysis process more intuitive and accessible, especially for non-technical users like administrators.
+
+## Cross-Institutional Comparison 
+
+Expanding the package to handle data from multiple institutions could make it possible to perform benchmarking and cross-institutional comparisons. This would be especially useful for academic departments wanting to compare their performance with peer institutions, fostering a competitive research environment.
 
 \newpage
 
