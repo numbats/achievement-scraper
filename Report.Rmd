@@ -80,7 +80,8 @@ The core functions of the Publication-Scraper package, `get_all_publications()` 
 
 It is the core function that retrieves and combines all publication data from both ORCID and Google Scholar profiles providing a unified view of a researcher’s academic outputs. For example, to retrieve publications for the first three researchers:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
+library(publicationsscraper)
 get_all_publications(orcid_gsid[1:3, ])
 ```
 
