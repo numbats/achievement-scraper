@@ -25,6 +25,7 @@ get_all_publications <- function(authors_df) {
     scholar_id <- authors_df$scholar_id[i]
 
     multiple_pubs <- get_publications(orcid_id, scholar_id)
+    multiple_pubs$lookup_name <- paste(authors_df$first_name[i], authors_df$last_name[i])
 
     combined_pubs[[i]] <- multiple_pubs
   }

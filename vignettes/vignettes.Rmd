@@ -32,14 +32,13 @@ library(dplyr)
 # Top Authors by Publications
 
 ```{r}
-author_names <- paste(orcid_gsid$first_name, orcid_gsid$last_name)
-get_all_publications(orcid_gsid) |> 
-  filter(authors %in% author_names) |>  
-  group_by(authors) |>  
+all_publications <- get_all_publications(orcid_gsid)
+all_publications |> 
+  group_by(lookup_name) |>  
   summarise(total_publications = n()) |>  
   arrange(desc(total_publications)) |>  
   slice_max(total_publications, n = 5) |>  
-  ggplot(aes(x = reorder(authors, total_publications), 
+  ggplot(aes(x = reorder(lookup_name, total_publications), 
              y = total_publications)) + 
   geom_bar(stat = "identity", fill = "blue") +
   coord_flip() +
