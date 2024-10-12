@@ -58,7 +58,7 @@ The bar chart illustrates the top five authors based on the number of their publ
 # Publication Trend of Top Authors Over Time
 ```{r}
 top_authors <- get_all_publications(orcid_gsid) |> 
-  filter(authors %in% author_names) |>  
+  filter(authors %in% lookup_name) |>  
   group_by(authors) |>  
   summarise(total_publications = n()) |>  
   arrange(desc(total_publications)) |>  
@@ -136,7 +136,7 @@ cran_all_pubs(orcid_gsid) |>
              y = downloads, 
              fill = ifelse(name == first(name), "highlight", "normal"))) +  
   geom_bar(stat = "identity") + 
-  scale_fill_manual(values = c("highlight" = "blue", "normal" = "gold"), guide = FALSE) +  
+  scale_fill_manual(values = c("highlight" = "gold", "normal" = "gold"), guide = FALSE) +  
   coord_flip() + 
    theme_bw() +
   labs(title = "Top 10 Packages by Downloads", 
