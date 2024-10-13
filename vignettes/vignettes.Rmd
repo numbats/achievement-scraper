@@ -33,10 +33,11 @@ library(dplyr)
 
 ```{r}
 all_publications <- get_all_publications(orcid_gsid)
-all_publications |> 
-  group_by(lookup_name) |>  
-  summarise(total_publications = n()) |>  
-  arrange(desc(total_publications)) |>  
+all_publications |>
+  filter(lookup_name != "Jiti Gao") |>
+  group_by(lookup_name) |>
+  summarise(total_publications = n()) |>
+  arrange(desc(total_publications)) |>
   slice_max(total_publications, n = 5) |>  
   ggplot(aes(x = reorder(lookup_name, total_publications), 
              y = total_publications)) + 
@@ -52,36 +53,37 @@ theme(plot.title = element_text(size = 16, face = "bold"),
 
 ## **Analysis**
 
-The bar chart illustrates the top five authors based on the number of their publications of Monash EBS Department. Athanasios Pantelous stands out as the most prolific author, with over 150 publications, indicating a significant contribution to the academic field. Rob J Hyndman follows, with slightly more than 100 publications, highlighting his extensive work, particularly in time series forecasting and statistical analysis. Close behind Hyndman is George Athanasopoulos, whose publication count also reflects substantial research activity. Dianne Cook comes next, contributing a notable number of publications, although slightly fewer than Athanasopoulos. Lastly, Otavio Bartalotti, while still among the top five, has a comparatively smaller number of publications. The chart reveals a notable gap between Pantelous and the rest, suggesting his particularly high productivity, while Hyndman, Athanasopoulos, and Cook are closely aligned in their output, with Bartalotti trailing behind.
-
+The bar chart displays the top five authors by the number of publications. The most prolific author is Rob J Hyndman, with over 600 publications, reflecting his extensive contributions, particularly in statistical forecasting and time series analysis. Athanasios Pantelous comes next, with over 400 publications, showing a strong research output across various areas.Following closely, Robert Brooks has published around 350 works, reflecting significant contributions to his research fields. Maxwell King is the fourth author on the list, with just over 200 publications, indicating substantial academic output. Finally, Ralph Snyder completes the top five with around 200 publications, contributing meaningfully to the department’s research achievements.
 
 # Publication Trend of Top Authors Over Time
 ```{r}
-top_authors <- get_all_publications(orcid_gsid) |> 
-  filter(authors %in% lookup_name) |>  
-  group_by(authors) |>  
-  summarise(total_publications = n()) |>  
-  arrange(desc(total_publications)) |>  
-  slice_max(total_publications, n = 5) |> 
-  pull(authors)
+top_authors <- all_publications |>
+  filter(lookup_name != "Jiti Gao") |>
+  group_by(lookup_name) |>
+  summarise(total_publications = n()) |>
+  arrange(desc(total_publications)) |>
+  slice_max(total_publications, n = 5) |>
+  pull(lookup_name)
 
-get_all_publications(orcid_gsid) |> 
-  filter(authors %in% top_authors) |>
-  group_by(authors, publication_year) |> 
+all_publications |>
+  filter(lookup_name %in% top_authors) |>  
+  group_by(lookup_name, publication_year) |> 
   summarise(total_publications = n()) |> 
-  ggplot(aes(x = as.numeric(publication_year), y = total_publications, color = authors)) +
-  geom_line(size = 1) +
-   theme_bw() +
+  ggplot(aes(x = publication_year, y = total_publications, color = lookup_name)) +  
+  geom_line(size = 1.2) +  
+  theme_bw() +
   labs(title = "Publication Trend of Top Authors Over Time",
        x = "Year",
-       y = "Number of Publications") +
-theme(plot.title = element_text(size = 16, face = "bold"),
-      axis.title = element_text(size = 12))
+       y = "Total Publications",
+       color = "Author") +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.title = element_text(size = 12),
+        legend.position = "bottom")
 ```
 
 ## **Analysis**
 
-The line graph shows the publication trends of the top five authors over time of Monash EBS Department. Athanasios Pantelous exhibits a sharp spike around 2010, where his publication count dramatically rises to over 40 in a single year, indicating a highly productive period. After this peak, his publication rate steadily declines but remains relatively active. Rob J Hyndman and George Athanasopoulos show a more consistent publication pattern over the years, with both experiencing several minor peaks around the same period, suggesting ongoing collaboration or similar research timelines. Dianne Cook demonstrates a moderate level of publication activity with a peak around the late 2000s but lower and more stable publication counts in recent years. Otavio Bartalotti maintains a relatively steady but lower publication output throughout the timeline. Overall, the graph highlights Pantelous' distinct peak in productivity, while Hyndman and Athanasopoulos maintain more consistent output over time, with the other authors showing more moderate and stable publication rates.
+The line graph illustrates the publication trends of the top five authors from the Monash EBS Department over time. Athanasios Pantelous stands out with a sharp spike around 2010, where his publication count rises dramatically to nearly 100 in a single year. This surge highlights a particularly productive period in his academic career. After this peak, his output declines but remains steady, reflecting ongoing contributions to research. Rob J Hyndman demonstrates a more gradual increase in publications starting around 1995, peaking close to 2010. Although his output decreases afterward, he continues to maintain a relatively high level of productivity, signifying sustained involvement in statistical research and time series analysis. Robert Brooks shows a relatively steady pattern with consistent fluctuations and moderate peaks throughout the years, with his most active period yielding around 25 publications annually. On the other hand, Maxwell King and Ralph Snyder exhibit stable but lower publication rates throughout the timeline. Their contributions remain consistent, without major spikes, indicating steady research activity over the years.
 
 
 # Publications by Year 
