@@ -7,7 +7,7 @@
 cran_all_pubs(authors)
 }
 \arguments{
-\item{author}{A list of names of different authors.}
+\item{authors}{A list of names of different authors.}
 }
 \value{
 A combined dataframe of CRAN package downloads for all authors.

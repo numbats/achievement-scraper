@@ -14,9 +14,11 @@ Imports:
     rorcid,
     magrittr,
     pkgsearch,
-    stringr
+    stringr,
+    purrr
 Suggests: 
     knitr,
+     ggplot2,
     rmarkdown,
     testthat (>= 3.0.0)
 Depends: 

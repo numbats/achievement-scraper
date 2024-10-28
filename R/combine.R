@@ -45,7 +45,7 @@ get_all_publications <- function(authors_df) {
 #' @description
 #' This function combines the cran publications for all authors.
 #'
-#' @param author A list of names of different authors.
+#' @param authors A list of names of different authors.
 #' @return A combined dataframe of CRAN package downloads for all authors.
 #' @examples
 #' \dontrun{

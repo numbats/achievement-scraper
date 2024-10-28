@@ -152,7 +152,7 @@ get_all_publications(authors_df)
 #> # ℹ 1,101 more rows
 ```
 
-## 4. \`cran_all_pubs
+## 4. `cran_all_pubs
 
 This function retrieves CRAN package download statistics for multiple
 authors by their first and last names.
@@ -224,5 +224,5 @@ install.packages(c("pkgsearch", "tibble", "dplyr", "stringr", "scholar", "rorcid
 ```
 
 ## License
+MIT License
 
-## References

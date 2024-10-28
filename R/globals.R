@@ -11,6 +11,10 @@ utils::globalVariables(
     "software_name",
     "num_downloads",
     "last_update_date",
-    "original_publish_date"
-    )
+    "original_publish_date",
+    "publication_year",
+    "external-id-type",
+    "external-id-value",
+    ":="
   )
+)

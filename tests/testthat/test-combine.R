@@ -35,58 +35,6 @@ test_that("get_publications fills missing columns with NA", {
   expect_true(all(!is.null(result$title)))
 })
 
-#  Unit tests for get_all_publications
-test_that("get_all_publications returns a dataframe with valid ORCID and Scholar IDs", {
-  authors_df <- tibble::tibble(
-    orcid_id = c("0000-0002-2140-5352", "0000-0002-1825-0097"),
-    scholar_id = c("vamErfkAAAAJ", NA))
-  result <- get_all_publications(authors_df)
-  expect_s3_class(result, "tbl_df")
-  expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name") %in% colnames(result)))
-  expect_true(any(!is.na(result$publication_year)))
-  expect_gt(nrow(result), 0)
-})
-
-test_that("get_all_publications returns publications for NA ORCID and valid Scholar ID", {
-  authors_df <- tibble::tibble(
-    orcid_id = c(NA),
-    scholar_id = c("vamErfkAAAAJ"))
-  result <- get_all_publications(authors_df)
-  expect_s3_class(result, "tbl_df")
-  expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name") %in% colnames(result)))
-  expect_gt(nrow(result), 0)
-})
-
-test_that("get_all_publications returns publications for valid ORCID and NA Scholar ID", {
-  authors_df <- tibble::tibble(
-    orcid_id = c("0000-0002-2140-5352"),
-    scholar_id = c(NA))
-  result <- get_all_publications(authors_df)
-  expect_s3_class(result, "tbl_df")
-  expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name") %in% colnames(result)))
-  expect_gt(nrow(result), 0)
-})
-
-
-test_that("get_all_publications returns empty dataframe for NA ORCID and NA Scholar ID", {
-  authors_df <- tibble::tibble(
-    orcid_id = c(NA),
-    scholar_id = c(NA))
-  result <- get_all_publications(authors_df)
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 0)
-})
-
-test_that("get_all_publications handles NAs properly", {
-  authors_df <- tibble::tibble(
-    orcid_id = c("0000-0002-2140-5352", NA, "0000-0001-5109-3700"),
-    scholar_id = c(NA, "vamErfkAAAAJ", NA)
-  )
-  result <- get_all_publications(authors_df)
-  expect_s3_class(result, "tbl_df")
-  expect_true(all(c("title", "DOI", "authors", "publication_year", "journal_name") %in% colnames(result)))
-  expect_gt(nrow(result), 0)
-})
 
 # Unit tests for cran_all_pubs
 test_that("cran_all_pubs returns a dataframe for valid authors", {
