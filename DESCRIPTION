@@ -13,7 +13,8 @@ Imports:
     tibble,
     rorcid,
     magrittr,
-    pkgsearch
+    pkgsearch,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,

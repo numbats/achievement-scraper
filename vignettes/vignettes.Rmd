@@ -51,9 +51,11 @@ theme(plot.title = element_text(size = 16, face = "bold"),
       axis.title = element_text(size = 12))
 ```
 
-## **Analysis**
+## Analysis
 
-The bar chart displays the top five authors by the number of publications. The most prolific author is Rob J Hyndman, with over 600 publications, reflecting his extensive contributions, particularly in statistical forecasting and time series analysis. Athanasios Pantelous comes next, with over 400 publications, showing a strong research output across various areas.Following closely, Robert Brooks has published around 350 works, reflecting significant contributions to his research fields. Maxwell King is the fourth author on the list, with just over 200 publications, indicating substantial academic output. Finally, Ralph Snyder completes the top five with around 200 publications, contributing meaningfully to the department’s research achievements.
+The bar chart presents the top five authors in the Monash EBS department based on their publication counts. Rob J Hyndman leads with the highest number of publications, reflecting his extensive contributions to the fields of statistical forecasting and time series analysis. Athanasios Pantelous follows, with a significant publication count that showcases his productivity in various research areas. Robert Brooks, with around 350 publications, shows a strong presence in his domain. Maxwell King and Ralph Snyder, with approximately 200 publications each, round out the top five, indicating steady research contributions over the years.
+
+However, it is important to note that the publication figures might be inflated due to issues such as double-counting. These issues arise when publications are counted more than once due to metadata variations across databases like ORCID and Google Scholar. This means that while the chart provides a useful snapshot of academic output, it may not fully represent the exact count of unique publications for each author. Future corrections to address double-counting will provide a more accurate depiction of their contributions.
 
 # Publication Trend of Top Authors Over Time
 ```{r}
@@ -81,9 +83,19 @@ all_publications |>
         legend.position = "bottom")
 ```
 
-## **Analysis**
+## Analysis
 
-The line graph illustrates the publication trends of the top five authors from the Monash EBS Department over time. Athanasios Pantelous stands out with a sharp spike around 2010, where his publication count rises dramatically to nearly 100 in a single year. This surge highlights a particularly productive period in his academic career. After this peak, his output declines but remains steady, reflecting ongoing contributions to research. Rob J Hyndman demonstrates a more gradual increase in publications starting around 1995, peaking close to 2010. Although his output decreases afterward, he continues to maintain a relatively high level of productivity, signifying sustained involvement in statistical research and time series analysis. Robert Brooks shows a relatively steady pattern with consistent fluctuations and moderate peaks throughout the years, with his most active period yielding around 25 publications annually. On the other hand, Maxwell King and Ralph Snyder exhibit stable but lower publication rates throughout the timeline. Their contributions remain consistent, without major spikes, indicating steady research activity over the years.
+The line graph illustrates the publication trends of the top five authors from the Monash EBS department over time, revealing several key trends:
+
+-   **Athanasios Pantelous** shows a sharp peak around 2010, where his publication count increased dramatically. This indicates a highly productive period in his research career, possibly due to increased focus on specific projects or collaborations. However, this figure is inaccurate due to issues of duplication in the underlying data (can be seen in Appendix 1 and 2). Several entries are repeated, inflating his actual number of publications during that year. After 2010, his publication rate stabilizes but remains consistent, reflecting ongoing contributions. Addressing the duplication problem will provide a more accurate representation of his research output.
+
+-   **Rob J Hyndman** exhibits a steady rise in publication count starting around 1995, reaching a peak close to 2010. His trend suggests a sustained period of high research activity, likely corresponding to his work in time series analysis and forecasting. Despite a slight decrease after the peak, he continues to contribute actively, maintaining a high level of research productivity.
+
+-   **Robert Brooks** has a consistent pattern with moderate fluctuations. His productivity peaks around certain years, with his highest activity seen around 2010. This indicates steady engagement in research, with occasional periods of increased output.
+
+-   **Maxwell King** and **Ralph Snyder** maintain relatively stable publication trends over the years, with no dramatic spikes. Their outputs are lower compared to the top three authors, but their consistent contributions highlight their steady involvement in research.
+
+Similar to the bar chart, the publication trends over time may be affected by double-counting and data inconsistencies, leading to potentially inflated publication figures. Correcting these issues in future analyses will help refine the accuracy of these trends, offering a clearer view of each author's research trajectory and contributions.
 
 
 # Publications by Year 
@@ -99,9 +111,13 @@ theme(plot.title = element_text(size = 16, face = "bold"),
       axis.title = element_text(size = 12))
 ```
 
-## **Analysis** 
+## Analysis
 
-The chart shows the overall trend in the number of publications over time across the Monash EBS department. The data shows a steady and gradual increase in publications up until the early 1990s, indicating relatively low research output during the initial years. However, from the mid-1990s onwards, there was a significant and consistent growth in the number of publications, with a sharp rise occurring around the mid-2000s to early 2010s, reaching a peak at over 300 publications. While there are some fluctuations post-2010, the general trend indicates that Monash EBS has seen substantial growth in its research output, possibly reflecting an increased emphasis on research, collaboration, and academic productivity in recent decades.
+This graph displays the trend of research publications over time within the Monash EBS department. The chart highlights a steady growth in publication output starting from the early 1990s, peaking sharply around 2010. After this peak, there is a notable decline followed by fluctuations in publication counts in subsequent years.
+
+The significant spike around 2010 warrants further investigation. Upon reviewing the dataset for that year (attached in the appendix 1 and 2), it was identified that there are numerous duplicated entries for certain publications. This duplication is especially apparent for authors like Athanasios Pantelous, whose publications were counted multiple times due to variations in metadata across different platforms, such as differing formats of titles or repeated records.
+
+The inflated publication figures in 2010 are thus a result of these data inconsistencies, which have caused an artificial peak in the chart. Addressing these data integrity issues—such as consolidating duplicate entries and ensuring consistent metadata—will be crucial for future analyses to more accurately reflect the true trends in research productivity over time.
 
 
 # Publications by Journal
@@ -124,7 +140,7 @@ theme(plot.title = element_text(size = 16, face = "bold"),
       axis.title = element_text(size = 12))
 ```
 
-## **Analysis**
+## Analysis
 
 The bar chart highlights the top 10 journals where Monash EBS staff frequently publish, with a strong focus on econometrics, forecasting, and statistical research. The "International Journal of Forecasting" leads in publication count, showcasing the department's emphasis on predictive analytics. The "Journal of Econometrics" follows, indicating a key interest in econometric studies. Other notable journals include the "Journal of Computational and Graphical Statistics" and "Journal of Applied Econometrics," reflecting contributions to statistical modeling and applied econometrics. The inclusion of journals like "Econometric Theory" and "European Journal of Operational Research" further illustrates a focus on both theoretical econometrics and operational research. Overall, the chart shows Monash EBS's substantial research output across these fields.
 
@@ -148,9 +164,13 @@ theme(plot.title = element_text(size = 16, face = "bold"),
       axis.title = element_text(size = 12))
 ```
 
-## **Analysis**
+## Analysis
 
-The bar chart shows the most downloaded R packages used by Monash EBS researchers, with "fracdiff" being the most popular by far. This suggests that many researchers rely on it for time series analysis, especially for fractional differencing. The next most common packages, "tsfeatures" and "fpp2," also point to a strong focus on time series forecasting and data features. Other packages like "rainbow," "hdrcde," "tsibbledata," and "fma" are also frequently used, showing they’re important for various data analysis tasks. The less downloaded packages, "Mcomp," "thief," and "demography," might be used for more specific or niche purposes. Overall, the chart highlights that time series analysis is a key area of interest for these researchers, which aligns well with advanced analytics and forecasting studies.
+The bar chart illustrates the top 10 CRAN packages by download count, highlighting the most frequently used packages by Monash EBS staff. The "fds" package leads with the highest number of downloads, suggesting its widespread use, likely due to its functionality in time series analysis and statistical forecasting. Closely following is "expsmooth," another popular package in the realm of forecasting and smoothing models. The popularity of these packages suggests a significant focus on time series analysis within the department, which aligns well with Monash EBS's strengths in forecasting and econometric research.
+
+The package "fpp" holds the third position, reinforcing the preference for forecasting tools. This package, along with "fds" and "expsmooth," underlines a consistent interest in analytical tools that support predictive modeling, time series decomposition another statistical applications essential in econometrics. "tourr," which ranks fourth, indicates an interest in visualization tools, specifically for exploring high-dimensional data. Its presence in the top downloads points towards a need for interactive and intuitive ways to analyze complex datasets, often useful in academic and research settings.
+
+Additionally, the package "ozmaps" reflects a focus on spatial data analysis, perhaps indicating the use of geographical data in research projects. Further down the list, packages like "spinifex" and "learningtower" have comparatively fewer downloads but show that specific tools catering to unique analytical needs are also valued. This trend of diverse yet specialized package usage suggests that Monash EBS researchers are using a wide array of analytical methods tailored to particular research objectives.
 
 
 
